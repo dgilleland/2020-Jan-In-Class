@@ -4,6 +4,9 @@
 # VuePress
 .vuepress/dist/
 
+# VSCode Workspace
+*.code-workspace
+
 # Created by https://www.gitignore.io/api/node,macos,windows,visualstudio,visualstudiocode
 
 ### macOS ###
