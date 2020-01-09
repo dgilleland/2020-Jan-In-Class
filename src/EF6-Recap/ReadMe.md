@@ -10,4 +10,4 @@ When you open the solution in Visual Studio, take a look at the "TODO" messages 
 
 ### ERD - West Wind Wholesale
 
-![ERD](https://raw.githubusercontent.com/dgilleland/West-Wind-Wholesale/master/Design/Diagrams-WestWindERD.png)
+![ERD](./Diagrams-WestWindERD.png)

@@ -15,7 +15,8 @@ namespace WestWindConsole.Entities
         [Key]
         public int ProductID { get; set; }
 
-        [Required, StringLength(40, ErrorMessage = "Product Name cannot be longer than 40 characters")]
+        [Required]
+        [StringLength(40, ErrorMessage = "Product Name cannot be longer than 40 characters")]
         public string ProductName { get; set; }
 
         public int SupplierID { get; set; }
