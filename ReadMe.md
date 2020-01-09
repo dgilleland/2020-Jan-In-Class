@@ -1,11 +1,31 @@
-# 2020-Jan-In-Class
+# DMIT-1508 In-Class Examples (Jan 2019)
 
-**Welcome!** You've reached the code-repository for my in-class examples for **Jan, 2020**.
+The files in this repository branch are my in-class examples. Additionally, you can find online notes at the course's [Moodle site](https://moodle.nait.ca) and on the unofficial [website notes](https://dmit-1508.github.io). Also be sure to checkout out the [**Learning Outcomes**](https://dmit-1508.github.io/about/LOGs.html) that I use in class.
 
-Go to the appropriate branch, depending on your section:
+## Outline
 
-- **DMIT 1508** Database Fundamentals
-  - [**A04 Workbook**](https://github.com/dgilleland/2020-Jan-In-Class/tree/DMIT-1508-A04)
-  - [**A05 Workbook**](https://github.com/dgilleland/2020-Jan-In-Class/tree/DMIT-1508-A05)
-- **DMIT 2018** Intermediate Application Development
-  - [**A01 Workbook**](https://github.com/dgilleland/2020-Jan-In-Class/tree/DMIT-2018-A01)
+The general topics in this workbook include
+
+- [**Normalization**](Design/)
+- SQL statements for 
+  - [**DDL**](DDL/) (Data Definition Language) - `CREATE TABLE` etc.
+  - [**DML**](DML/) (Data Manipulation Language) - `INSERT INTO` etc.
+  - [**Queries**](SQL/) - `SELECT` etc.
+  - [**Stored Procedures**](SPROCS/) (sprocs) - `CREATE PROCEDURE` etc.
+  - [**Triggers**](Triggers/) - `CREATE TRIGGER` etc.
+
+----
+
+## Software and Resources
+
+Recommended tools for this course include:
+
+- SQL Server 2017, Developer Edition (available through [Microsoft Imagine](https://e5.onthehub.com/WebStore/OfferingDetails.aspx?o=32dd97ce-e6ad-e711-80f7-000d3af41938&ws=3511aead-a58b-e011-969d-0030487d8897&vsro=8))
+- [Visual Studio Code](https://code.visualstudio.com)
+  - Begin your journey with VS Code with these [introductory videos](https://code.visualstudio.com/docs/introvideos/overview).
+- [GitHub Desktop](https://desktop.github.com)
+- Draw.io ([desktop](https://about.draw.io/integrations/#integrations_offline) and [online](https://draw.io) versions)
+
+Other recommended resources include:
+
+- [Learn Markdown](https://commonmark.org/help/)
