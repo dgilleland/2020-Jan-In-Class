@@ -13,6 +13,15 @@ namespace WebApp.Inventory {
     public partial class ManageProducts {
         
         /// <summary>
+        /// MessageLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label MessageLabel;
+        
+        /// <summary>
         /// ProductInventoryGridView control.
         /// </summary>
         /// <remarks>
@@ -29,5 +38,14 @@ namespace WebApp.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource ProductInventoryDataSource;
+        
+        /// <summary>
+        /// SupplierDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource SupplierDataSource;
     }
 }
