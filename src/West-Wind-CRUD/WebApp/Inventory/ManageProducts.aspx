@@ -11,12 +11,11 @@
                 DataSourceID="ProductInventoryDataSource"
                 AutoGenerateColumns="False"
                 CssClass="table table-hover table-condensed"
-                DataKeyNames="ProductID"
-                >
+                DataKeyNames="ProductID">
                 <Columns>
                     <asp:CommandField ShowEditButton="True" ShowDeleteButton="True"></asp:CommandField>
                     <asp:BoundField DataField="ProductName" HeaderText="Name"></asp:BoundField>
-                    
+
                     <asp:TemplateField HeaderText="Supplier">
                         <ItemTemplate>
                             <asp:DropDownList ID="SupplierDropDown" runat="server"
@@ -52,9 +51,8 @@
                 TypeName="WestWindSystem.BLL.InventoryController"
                 DataObjectTypeName="WestWindSystem.Entities.Product"
                 DeleteMethod="DeleteProduct"
-                UpdateMethod="UpdateProduct"
-                ></asp:ObjectDataSource>
-                                        <asp:ObjectDataSource runat="server" ID="SupplierDataSource" OldValuesParameterFormatString="original_{0}" SelectMethod="ListAllSuppliers" TypeName="WestWindSystem.BLL.InventoryController"></asp:ObjectDataSource>
+                UpdateMethod="UpdateProduct"></asp:ObjectDataSource>
+            <asp:ObjectDataSource runat="server" ID="SupplierDataSource" OldValuesParameterFormatString="original_{0}" SelectMethod="ListAllSuppliers" TypeName="WestWindSystem.BLL.InventoryController"></asp:ObjectDataSource>
         </div>
     </div>
 </asp:Content>
