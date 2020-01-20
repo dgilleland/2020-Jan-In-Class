@@ -31,6 +31,15 @@ namespace WebApp.Inventory {
         protected global::System.Web.UI.WebControls.ListView ProductsListView;
         
         /// <summary>
+        /// SupplierDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource SupplierDataSource;
+        
+        /// <summary>
         /// ProductDataSource control.
         /// </summary>
         /// <remarks>
