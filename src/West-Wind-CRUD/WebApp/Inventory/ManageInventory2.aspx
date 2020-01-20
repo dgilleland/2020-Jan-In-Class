@@ -90,7 +90,7 @@
                         <td>
                             <asp:Label Text='<%# Eval("MinimumOrderQuantity") %>' runat="server" ID="MinimumOrderQuantityLabel" /></td>
                         <td>
-                            <asp:Label Text='<%# Eval("UnitPrice") %>' runat="server" ID="UnitPriceLabel" /></td>
+                            <asp:Label Text='<%# Item.UnitPrice.ToString("C") %>' runat="server" ID="UnitPriceLabel" /></td>
                         <td>
                             <asp:Label Text='<%# Eval("UnitsOnOrder") %>' runat="server" ID="UnitsOnOrderLabel" /></td>
                         <td>
