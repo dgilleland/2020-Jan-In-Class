@@ -29,7 +29,15 @@ namespace WestWindSystem.BLL
         {
             using(var context = new WestWindContext())
             {
-                return context.Products.ToList();
+                // Get the Product information along with
+                // the supplier and category information for
+                // each Product
+                return 
+                    context
+                    .Products
+                    .Include(nameof(Product.Supplier))
+                    .Include(nameof(Product.Category))
+                    .ToList();
             }
         }
 

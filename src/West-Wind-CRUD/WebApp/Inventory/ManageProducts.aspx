@@ -15,19 +15,15 @@
                 DataSourceID="ProductInventoryDataSource"
                 AutoGenerateColumns="False"
                 CssClass="table table-hover table-condensed"
-                DataKeyNames="ProductID">
+                DataKeyNames="ProductID"
+                ItemType="WestWindSystem.Entities.Product">
                 <Columns>
                     <asp:CommandField ShowEditButton="True" ShowDeleteButton="True"></asp:CommandField>
                     <asp:BoundField DataField="ProductName" HeaderText="Name"></asp:BoundField>
 
                     <asp:TemplateField HeaderText="Supplier">
                         <ItemTemplate>
-                            <asp:DropDownList ID="SupplierDropDown" runat="server"
-                                DataSourceID="SupplierDataSource"
-                                DataTextField="CompanyName"
-                                DataValueField="SupplierID"
-                                SelectedValue='<%# Eval("SupplierID") %>'>
-                            </asp:DropDownList>
+                            <%# Item.Supplier.CompanyName %>
                         </ItemTemplate>
                         <EditItemTemplate>
                             <asp:DropDownList ID="SupplierDropDown" runat="server"
