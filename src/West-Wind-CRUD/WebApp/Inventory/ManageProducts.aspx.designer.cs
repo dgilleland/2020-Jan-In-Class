@@ -13,6 +13,15 @@ namespace WebApp.Inventory {
     public partial class ManageProducts {
         
         /// <summary>
+        /// MessageUserControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::FreeCode.WebApp.UserControls.MessageUserControl MessageUserControl;
+        
+        /// <summary>
         /// MessageLabel control.
         /// </summary>
         /// <remarks>

@@ -14,23 +14,10 @@ namespace WebApp.Inventory
 
         }
 
-        protected void ProductInventoryDataSource_Deleted(object sender, ObjectDataSourceStatusEventArgs e)
+        protected void HandleExceptions(object sender, ObjectDataSourceStatusEventArgs e)
         {
-            if(e.Exception != null)
-            {
-                // Get to the root of the problem
-                Exception inner = e.Exception; // Start at the top
-                while (inner.InnerException != null)
-                    inner = inner.InnerException; // Go a level deeper
-
-                MessageLabel.Text = inner.Message;
-                e.ExceptionHandled = true;
-            }
-        }
-
-        protected void ProductInventoryDataSource_Deleting(object sender, ObjectDataSourceMethodEventArgs e)
-        {
-
+            // Tell the user control to handle any exceptions
+            MessageUserControl.HandleDataBoundException(e);
         }
     }
 }

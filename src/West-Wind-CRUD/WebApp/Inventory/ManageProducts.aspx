@@ -1,11 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ManageProducts.aspx.cs" Inherits="WebApp.Inventory.ManageProducts" %>
 
+<%@ Register Src="~/UserControls/MessageUserControl.ascx" TagPrefix="uc1" TagName="MessageUserControl" %>
+
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <div class="row">
         <div class="col-md-12">
             <h1 class="page-header">Manage Products</h1>
         </div>
         <div class="col-md-12">
+            <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
             <asp:Label ID="MessageLabel" runat="server"></asp:Label>
             <asp:GridView ID="ProductInventoryGridView" runat="server"
                 DataSourceID="ProductInventoryDataSource"
@@ -45,8 +49,8 @@
             </asp:GridView>
             <asp:ObjectDataSource ID="ProductInventoryDataSource" runat="server"
                 OldValuesParameterFormatString="original_{0}"
-                OnDeleted="ProductInventoryDataSource_Deleted"
-                OnDeleting="ProductInventoryDataSource_Deleting"
+                OnDeleted="HandleExceptions"
+                OnUpdated="HandleExceptions"
                 SelectMethod="ListAllProducts"
                 TypeName="WestWindSystem.BLL.InventoryController"
                 DataObjectTypeName="WestWindSystem.Entities.Product"
