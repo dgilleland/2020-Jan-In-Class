@@ -38,6 +38,16 @@ namespace WestWindSystem.BLL
                     .Include(nameof(Product.Supplier))
                     .Include(nameof(Product.Category))
                     .ToList();
+            } // Exiting the using block will "dispose" of the context object
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Insert)]
+        public void InsertProduct(Product info)
+        {
+            using(var context = new WestWindContext())
+            {
+                context.Products.Add(info);
+                context.SaveChanges();
             }
         }
 
