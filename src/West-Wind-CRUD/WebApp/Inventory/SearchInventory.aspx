@@ -27,15 +27,11 @@
             <h2>Inventory</h2>
             <asp:GridView ID="ProductsGridView" runat="server" AutoGenerateColumns="False" DataSourceID="ProductsDataSource">
                 <Columns>
-                    <asp:BoundField DataField="ProductID" HeaderText="ProductID" SortExpression="ProductID"></asp:BoundField>
                     <asp:BoundField DataField="ProductName" HeaderText="ProductName" SortExpression="ProductName"></asp:BoundField>
-                    <asp:BoundField DataField="SupplierID" HeaderText="SupplierID" SortExpression="SupplierID"></asp:BoundField>
-                    <asp:BoundField DataField="CategoryID" HeaderText="CategoryID" SortExpression="CategoryID"></asp:BoundField>
+                    <asp:BoundField DataField="Supplier" HeaderText="Supplier" SortExpression="Supplier"></asp:BoundField>
+                    <asp:BoundField DataField="Category" HeaderText="Category" SortExpression="Category"></asp:BoundField>
+                    <asp:BoundField DataField="SellingPrice" HeaderText="SellingPrice" SortExpression="SellingPrice"></asp:BoundField>
                     <asp:BoundField DataField="QuantityPerUnit" HeaderText="QuantityPerUnit" SortExpression="QuantityPerUnit"></asp:BoundField>
-                    <asp:BoundField DataField="MinimumOrderQuantity" HeaderText="MinimumOrderQuantity" SortExpression="MinimumOrderQuantity"></asp:BoundField>
-                    <asp:BoundField DataField="UnitPrice" HeaderText="UnitPrice" SortExpression="UnitPrice"></asp:BoundField>
-                    <asp:BoundField DataField="UnitsOnOrder" HeaderText="UnitsOnOrder" SortExpression="UnitsOnOrder"></asp:BoundField>
-                    <asp:CheckBoxField DataField="Discontinued" HeaderText="Discontinued" SortExpression="Discontinued"></asp:CheckBoxField>
                 </Columns>
             </asp:GridView>
 

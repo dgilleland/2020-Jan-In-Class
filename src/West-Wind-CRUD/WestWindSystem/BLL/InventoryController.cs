@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WestWindSystem.DAL;
+using WestWindSystem.DataModels;
 using WestWindSystem.Entities;
 
 namespace WestWindSystem.BLL
@@ -25,14 +26,22 @@ namespace WestWindSystem.BLL
 
         #region Products - Queries
         [DataObjectMethod(DataObjectMethodType.Select)]
-        public List<Product> ListProductsBySupplier(int supplierId)
+        public List<ProductSummary> ListProductsBySupplier(int supplierId)
         {
             using(var context = new WestWindContext())
             {
                 // Using a LINQ query to get the products by supplier
                 var result = from item in context.Products
                              where item.SupplierID == supplierId
-                             select item;
+                             select new ProductSummary
+                             {
+                                 // Set the property values in this initializer list
+                                 ProductName = item.ProductName,
+                                 SellingPrice = item.UnitPrice,
+                                 QuantityPerUnit = item.QuantityPerUnit,
+                                 Supplier = item.Supplier.CompanyName,
+                                 Category = item.Category.CategoryName
+                             };
                 return result.ToList();
             }
         }
