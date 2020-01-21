@@ -134,6 +134,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Inventory\ManageInventory2.aspx" />
     <Content Include="Inventory\ManageProducts.aspx" />
+    <Content Include="Inventory\SearchInventory.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -210,6 +211,13 @@
     </Compile>
     <Compile Include="Inventory\ManageProducts.aspx.designer.cs">
       <DependentUpon>ManageProducts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory\SearchInventory.aspx.cs">
+      <DependentUpon>SearchInventory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inventory\SearchInventory.aspx.designer.cs">
+      <DependentUpon>SearchInventory.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
