@@ -22,6 +22,15 @@ namespace WebApp.Inventory {
         protected global::System.Web.UI.WebControls.DropDownList SuppliersDropDown;
         
         /// <summary>
+        /// SearchBySupplier control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton SearchBySupplier;
+        
+        /// <summary>
         /// SuppliersDataSource control.
         /// </summary>
         /// <remarks>
@@ -29,5 +38,23 @@ namespace WebApp.Inventory {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ObjectDataSource SuppliersDataSource;
+        
+        /// <summary>
+        /// ProductsGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ProductsGridView;
+        
+        /// <summary>
+        /// ProductsDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ObjectDataSource ProductsDataSource;
     }
 }
