@@ -1,5 +1,27 @@
 # Lab Template
 
+## Customer Details View
+
+### 0NF
+
+**Customer:** (<b class="pk">CustomerNumber</b>, FirstName, LastName, Address, City, Province, PostalCode, HomePhone)
+
+### 1NF-3NF
+
+*No changes to the entity/table in 1NF to 3NF.*
+
+### ERD
+
+> TODO: Place image here
+
+## Customer Orders View
+
+### 0NF
+
+**Order:** (<b class="pk">OrderNumber</b>, CustomerNumber, FirstName, LastName, Address, City, Province, PostalCode, Phone, Date, <b class="rg">ItemNumber, Description, Quantity, CurrentPrice, SellingPrice, Amount</b>, Subtotal, GST, Total)
+
+----
+
 > Your lab is to be submitted as a **Markdown** (`*.md`) file using the following legend. The recommended text editor for these files is [**Visual Studio Code**](https://code.visualstudio.com), as this editor allows you to preview your markdown document as HTML. ERDs can be created using [**Lucidchart**](https://www.lucidchart.com/) and exported as `*.png` files. Check with your instructor about getting a free *Lucidchart* account to use during this course.
 
 ## Legend
@@ -17,18 +39,74 @@ This legend is a guide to reading and interpreting the table listings under 0NF 
 ----
 
 <style type="text/css">
+.md {
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+}
+.md::before {
+    content: '(';
+    font-size: 1.25em;
+    font-weight: bold;
+}
+.md::after {
+    content: ')';
+    font-size: 1.25em;
+    font-weight: bold;
+}
 .pk {
     font-weight: bold;
     display: inline-block;
     border: solid thin blue;
-    padding: 0 1px;
+    padding: 0 2px;
+    position: relative;
+}
+.pk::before {
+    content: 'P';
+    font-size: .55em;
+    font-weight: bold;
+    color: white;
+    background-color: #72c4f7;
+    position: absolute;
+    left: -5px;
+    top: -15px;
+    border-radius: 50%;
+    border: solid thin blue;
+    width: 1.4em;
+    height: 1.4em;
+    padding: 3px;
+    text-align: center;
 }
 .fk {
     color: green;
     font-style: italic;
-    text-decoration: wavy underline green;    
+    text-decoration: wavy underline green;
+    padding: 0 2px;
+    position: relative;
 }
-.rg {
+.fk::before {
+    content: 'F';
+    font-size: .65em;
+    position: absolute;
+    left: -1px;
+    bottom: -17px;
+    color: darkgreen;
+    background-color: #a7dea7;
+    border-radius: 50%;
+    border: dashed thin green;
+    width: 1.4em;
+    height: 1.4em;
+    padding: 3px;
+    text-align: center;
+}
+.rg::before {
+    content: '\007B';
+    color: darkorange;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.rg::after {
+    content: '\007D';
     color: darkorange;
     font-size: 1.2em;
     font-weight: bold;
