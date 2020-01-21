@@ -23,6 +23,21 @@ namespace WestWindSystem.BLL
         }
         #endregion
 
+        #region Products - Queries
+        [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<Product> ListProductsBySupplier(int supplierId)
+        {
+            using(var context = new WestWindContext())
+            {
+                // Using a LINQ query to get the products by supplier
+                var result = from item in context.Products
+                             where item.SupplierID == supplierId
+                             select item;
+                return result.ToList();
+            }
+        }
+        #endregion
+
         #region Products CRUD
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<Product> ListAllProducts()
