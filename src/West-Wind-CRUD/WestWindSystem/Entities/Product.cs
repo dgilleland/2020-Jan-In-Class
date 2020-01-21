@@ -17,8 +17,8 @@ namespace WestWindSystem.Entities
 
         public int ProductID { get; set; }
 
-        [Required]
-        [StringLength(40)]
+        [Required(ErrorMessage = "Product name is required")]
+        [StringLength(40, ErrorMessage = "Product name must be 40 characters or less")]
         public string ProductName { get; set; }
 
         public int SupplierID { get; set; }
