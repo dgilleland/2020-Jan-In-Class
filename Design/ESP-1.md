@@ -12,7 +12,7 @@
 
 ### ERD
 
-> TODO: Place image here
+![Customers View](./ERD-CustomersView.png)
 
 ## Customer Orders View
 
