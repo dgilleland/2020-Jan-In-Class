@@ -38,6 +38,10 @@
 
 **Customer** <span class="md"><b class="pk">CustomerNumber</b>, FirstName, LastName, Address, City, Province, PostalCode, Phone</span>
 
+### ERD
+
+![Customer Orders View](./ERD-CustomerOrderView.png)
+
 
 ----
 
