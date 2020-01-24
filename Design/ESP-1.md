@@ -50,7 +50,7 @@
 
 ### ERD
 
-> TODO: *ERD Image here*
+![Customer Orders](./CustomerOrderView-ERD.png)
 
 ----
 
