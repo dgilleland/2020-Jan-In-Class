@@ -16,7 +16,7 @@ public class Student
 	// Constructor
 	public Student(string name, DateTime birthdate)
 	{
-		if(string.IsNullOrWhitespace(name)) throw new ArgumentNullException("Invalid name");
+		if(string.IsNullOrWhiteSpace(name)) throw new ArgumentNullException("Invalid name");
 		if(birthdate > DateTime.Today) throw new ArgumentException("Invalid birthdate - no futures");
 		Name = name.Trim();
 		DOB = birthdate;
