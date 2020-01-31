@@ -1,8 +1,8 @@
 ## Course Offering View
 
-## Final set
+### Final Entities
 
-**CourseOffering:** <span class="md"><b class="pk">OfferingId</b>, CourseNumber, Name, Credits, Hours, <u class="fk">InstructorId</u></span>
+**CourseOffering:** <span class="md"><b class="pk">OfferingId</b>, <u class="fk">CourseNumber</u>, SectionNumber, StartDate, EndDate, <u class="fk">InstructorId</u></span>
 
 **ClassMembers:** <span class="md"><b class="pk"><u class="fk">OfferingId</u>, <u class="fk">StudentId</u></b>, Paid</span>
 
@@ -10,6 +10,19 @@
 
 **Instructors:** <span class="md"><b class="pk">InstructorId</b>, FirstName, LastName, Sessional</span>
 
+**Courses:** <span class="md"><b class="pk">CourseNumber</b>, Name, Credits, Hours)
+
+----
+
+## Class Shedule View
+
+### Final Entities
+
+**OfferingSchedules:** <span class="md"><b class="pk">CourseOfferingId</b>, <u class="fk">CourseNumber</u>, StartDate, EndDate</span>
+
+**Rooms:** <span class="md"><b class="pk"><u class="fk">CourseOfferingId</u>, DayOfWeek</b>, StartTime, EndTime, RoomNumber</span>
+
+**Courses:** <span class="md"><b class="pk">CourseNumber</b>, SectionNumber</span>
 
 ----
 
