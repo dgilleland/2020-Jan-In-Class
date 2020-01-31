@@ -2,6 +2,10 @@
 
 > This sample normalization contains the final entities from performing 0NF through 3NF on various views for a school offering courses. The printable version is available [here](./MySchool.pdf).
 
+**TODO:**
+
+- [ ] Expand Class Schedule View to be all the class schedules for an instructor.
+
 ## Course Offering View
 
 ### Final Entities
