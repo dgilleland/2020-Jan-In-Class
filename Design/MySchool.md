@@ -30,6 +30,14 @@
 
 ----
 
+## Term Holidays View
+
+**SchoolTerms:** <span class="md"><b class="pk">TermNumber</b>, StartDate, EndDate
+
+**Holidays:** <span class="md"><b class="pk"><u class="fk">TermNumber</u>, Description</b>, FromDate, ToDate</span>
+
+----
+
 <style>
 .md {
     display: inline-block;
