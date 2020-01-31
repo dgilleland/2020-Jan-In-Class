@@ -1,3 +1,7 @@
+# My School
+
+> This sample normalization contains the final entities from performing 0NF through 3NF on various views for a school offering courses. The printable version is available [here](./MySchool.pdf).
+
 ## Course Offering View
 
 ### Final Entities
