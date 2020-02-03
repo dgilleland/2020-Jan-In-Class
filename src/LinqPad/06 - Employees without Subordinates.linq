@@ -1,6 +1,6 @@
 <Query Kind="Expression">
   <Connection>
-    <ID>9f795fec-6525-43c5-bbd0-2819df27768a</ID>
+    <ID>7d565fca-16c5-4615-89fa-17901cae76d0</ID>
     <Persist>true</Persist>
     <Server>.</Server>
     <Database>WestWind</Database>
@@ -11,7 +11,7 @@
 from person in Employees
 //   thing      thing[] 
 where person.ReportsToChildren.Count == 0
-//     thing    thing[]
+//     thing    otherThing[]
 select new
 {
   Name = person.FirstName + " " + person.LastName

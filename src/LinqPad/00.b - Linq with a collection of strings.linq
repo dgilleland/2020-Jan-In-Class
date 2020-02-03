@@ -3,6 +3,7 @@
 void Main()
 {
     Instructors.Dump();
+	// This is a demo of using Query syntax with Linq
 	//  foreach(var person in Instructors)
 	var best = from person in Instructors
 	//             \string/   \string[]/
