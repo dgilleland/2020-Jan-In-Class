@@ -25,7 +25,9 @@ CREATE TABLE Students
     GivenName       varchar(50)     NOT NULL,
     Surname         varchar(50)     NOT NULL,
     DateOfBirth     datetime        NOT NULL,
-    Enrolled        bit             NOT NULL
+    Enrolled        bit
+        CONSTRAINT DF_Students_Enrolled
+            DEFAULT (1)             NOT NULL
 )
 
 CREATE TABLE Courses
