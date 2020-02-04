@@ -13,5 +13,5 @@ orderby person.LastName, person.FirstName
 select new
 {
     person.FirstName,
-	person.LastName
+    person.LastName
 }

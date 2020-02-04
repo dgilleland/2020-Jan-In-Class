@@ -13,11 +13,11 @@ group person by person.Address.Region into EmployeeGroups
 select new
 {
     Region = EmployeeGroups.Key,
-	Employee = from staff in EmployeeGroups
-	           select new
+    Employee = from staff in EmployeeGroups
+               select new
                {
-			       FirstName = staff.FirstName,
-				   LastName = staff.LastName,
-				   JobTitle = staff.JobTitle
+                   FirstName = staff.FirstName,
+                   LastName = staff.LastName,
+                   JobTitle = staff.JobTitle
                }
 }

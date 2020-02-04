@@ -7,27 +7,27 @@
 */
 void Main()
 {
-//	DemoMath();
-	MoreMath();
+//    DemoMath();
+    MoreMath();
 }
 
 // Define other methods and classes here
 void MoreMath()
 {
-	int diameter = 10;
-	double area = Math.PI * (diameter / 2) * (diameter / 2);
-	area.Dump("Area of a 10cm diameter circle");
-	
+    int diameter = 10;
+    double area = Math.PI * (diameter / 2) * (diameter / 2);
+    area.Dump("Area of a 10cm diameter circle");
+    
     double area2 = Math.PI * 5 * 5;
-	area2.Dump();
+    area2.Dump();
 }
 
 void DemoMath()
 {
-	int quantity = 10;
-	double weight = 4.93;
-	double totalWeight = quantity * weight;
-	Console.WriteLine(totalWeight);
+    int quantity = 10;
+    double weight = 4.93;
+    double totalWeight = quantity * weight;
+    Console.WriteLine(totalWeight);
 }
 
 

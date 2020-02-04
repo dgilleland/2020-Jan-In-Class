@@ -14,7 +14,7 @@
 from company in Shippers
 select new
 {
-	Name = company.CompanyName,
-	PhoneNumber = company.Phone,
-	NumberOfShipments = company.ShipViaShipments.Count()
+    Name = company.CompanyName,
+    PhoneNumber = company.Phone,
+    NumberOfShipments = company.ShipViaShipments.Count()
 }

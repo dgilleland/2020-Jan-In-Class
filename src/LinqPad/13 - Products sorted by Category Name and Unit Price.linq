@@ -13,6 +13,6 @@ orderby item.Category.CategoryName ascending, item.UnitPrice descending
 select new
 {
     Product = item.ProductName,
-	Category = item.Category.CategoryName,
-	Price = item.UnitPrice
+    Category = item.Category.CategoryName,
+    Price = item.UnitPrice
 }

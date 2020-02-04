@@ -17,7 +17,7 @@ select new
    Customers = from data in CustomersByCountry
                select new
                {
-			       Company = data.CompanyName,
-				   Contact = data.ContactName
+                   Company = data.CompanyName,
+                   Contact = data.ContactName
                }
 }
