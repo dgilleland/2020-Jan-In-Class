@@ -7,13 +7,14 @@
   </Connection>
 </Query>
 
-// Display all the company names and contact names for our customers, grouped by country
 from row in Customers
-group  row   by   row.Address.Country into CustomersByCountry
+where row.Address.City.StartsWith("M")
+group  row   by   row.Address.City into CustomersByCountry
 //    \what/      \       how       /
+where CustomersByCountry.Count() > 2
 select new
 {
-   Country = CustomersByCountry.Key, // the key is "how" we have sorted the data
+   City = CustomersByCountry.Key, // the key is "how" we have sorted the data
    Customers = from data in CustomersByCountry
                select new
                {
