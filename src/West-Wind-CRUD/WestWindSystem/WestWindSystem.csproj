@@ -54,6 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\InventoryController.cs" />
+    <Compile Include="DataModels\CategorizedProducts.cs" />
+    <Compile Include="DataModels\ProductInfo.cs" />
     <Compile Include="DataModels\ProductSummary.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\BuildVersion.cs" />

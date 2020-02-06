@@ -26,6 +26,30 @@ namespace WestWindSystem.BLL
 
         #region Products - Queries
         [DataObjectMethod(DataObjectMethodType.Select)]
+        public List<CategorizedProducts> ListProductsByCategory()
+        {
+            using (var context = new WestWindContext())
+            {
+                // Paste my code from LinqPad here
+                var result = from cat in context.Categories
+                             select new CategorizedProducts
+                             {
+                                 Name = cat.CategoryName,
+                                 Description = cat.Description,
+                                 Picture = cat.Picture, //.ToImage()
+                                 Products = from item in cat.Products
+                                            select new ProductInfo
+                                            {
+                                                Name = item.ProductName,
+                                                QuantityPerUnit = item.QuantityPerUnit,
+                                                Price = item.UnitPrice
+                                            }
+                             };
+                return result.ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ProductSummary> ListProductsBySupplier(int supplierId)
         {
             using(var context = new WestWindContext())
