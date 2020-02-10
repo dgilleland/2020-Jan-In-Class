@@ -128,3 +128,24 @@ ALTER TABLE Students
         CHECK (PostalCode LIKE '[A-Z][0-9][A-Z][0-9][A-Z][0-9]')
         --  Match for  T4R1H2 :   T    4    R    1    H    2
 GO
+
+-- 3) Add a default constraint for the Status column of StudentCourses.
+--    Set 'E' as the default value
+ALTER TABLE StudentCourses
+    ADD CONSTRAINT DF_StudentCourses_Status
+        DEFAULT ('E') FOR [Status] -- In an Alter Table statement, the column must be specified
+                                   -- for the default value
+GO
+
+/* ----- Other Odds and Ends ----- */
+sp_help Students -- Get schema information for the Students table
+
+-- In a table, we can have some columns be "calculated" or "derived" columns
+-- where the value of the column is a calculation from other columns
+CREATE TABLE Invoice
+(
+    InvoiceId       int         NOT NULL,
+    Subtotal        money       NOT NULL,
+    GST             money       NOT NULL,
+    Total           AS Subtotal + GST     -- This is a Computed Column
+)
