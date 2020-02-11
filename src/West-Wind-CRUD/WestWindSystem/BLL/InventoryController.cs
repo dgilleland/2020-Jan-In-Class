@@ -25,6 +25,23 @@ namespace WestWindSystem.BLL
         #endregion
 
         #region Products - Queries
+        public List<ProductInfo> ListActiveProducts()
+        {
+            using(var context = new WestWindContext())
+            {
+                var result = from item in context.Products
+                             orderby item.ProductName
+                             where !item.Discontinued
+                             select new ProductInfo
+                             {
+                                 Name = item.ProductName,
+                                 Price = item.UnitPrice,
+                                 QuantityPerUnit = item.QuantityPerUnit
+                             };
+                return result.ToList();
+            }
+        }
+
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<CategorizedProducts> ListProductsByCategory()
         {

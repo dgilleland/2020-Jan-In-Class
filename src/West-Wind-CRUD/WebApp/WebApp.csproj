@@ -136,6 +136,7 @@
     <Content Include="Inventory\ManageProducts.aspx" />
     <Content Include="Inventory\ProductsByCategory.aspx" />
     <Content Include="Inventory\SearchInventory.aspx" />
+    <Content Include="Sandbox\ProductSelection.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -228,6 +229,13 @@
       <DependentUpon>SearchInventory.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sandbox\ProductSelection.aspx.cs">
+      <DependentUpon>ProductSelection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Sandbox\ProductSelection.aspx.designer.cs">
+      <DependentUpon>ProductSelection.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
