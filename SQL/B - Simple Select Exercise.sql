@@ -5,6 +5,9 @@
 Use [A01-School]
 GO
 
+--Q.    What is the average of the following numbers?
+--      97 43 53 29 40 77 10 55 37 82
+
 --1.	Select the average Mark from all the Marks in the registration table
 SELECT  AVG(Mark) AS 'Average Mark'
 FROM    Registration
@@ -30,13 +33,17 @@ FROM    Student
 SELECT  COUNT(1) AS 'Student Count'
 FROM    Student
 
+--SELECT  COUNT(NULL) AS 'Student Count'
+--FROM    Student
+
+
 -- 3.c  Select how many people are in the Staff table
 SELECT  COUNT(StaffID) AS 'Staff Count' -- It's common to use the PK as the column that you're counting
 FROM    Staff
 
 -- 3.d  Do a count of the people in the Staff table who are no longer working here
 --      Refresh your memory about all the data in the Staff table
-SELECT  * FROM Staff
+--      SELECT  * FROM Staff
 SELECT  COUNT(DateReleased) AS 'Retired Staff'
 FROM    Staff
 
