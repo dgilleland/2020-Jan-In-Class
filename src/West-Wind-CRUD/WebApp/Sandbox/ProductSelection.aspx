@@ -20,7 +20,7 @@
                 <Columns>
                     <asp:TemplateField HeaderText="Name">
                         <ItemTemplate>
-                            <%# Item.Name %>
+                            <asp:Label id="ProductName" runat="server" Text="<%# Item.Name %>" />
                         </ItemTemplate>                        
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Unit Price">
