@@ -25,12 +25,15 @@ SELECT  PaymentTypeID,                              -- Non-aggregate column (btw
         COUNT(PaymentTypeID) AS 'Count of Pay Type' -- Aggregate column
 FROM    Payment
 GROUP BY PaymentTypeID
+-- Let's see what the PaymentTypes are
+SELECT  P.PaymentTypeID, P.PaymentTypeDescription
+FROM    PaymentType AS P
 -- 2a. Do the same as above, but sort it from most frequent payment type to the least frequent
 SELECT  PaymentTypeID,                              -- Non-aggregate column (btw, it's a FK)
         COUNT(PaymentTypeID) AS 'Count of Pay Type' -- Aggregate column
 FROM    Payment
 GROUP BY PaymentTypeID
-ORDER BY COUNT(PaymentTypeID) ASC
+ORDER BY COUNT(PaymentTypeID) DESC
 -- HELP! Is the answer above correct?? How can we fix it?
 /* A note on ORDER BY
    - The ORDER BY clause will, by default, do the sorting in ascending order.
@@ -70,7 +73,6 @@ SELECT MAX(Amount) AS 'Highest',
 --       , PaymentTypeID
 FROM   Payment
 GROUP BY PaymentTypeID
-
 
 -- 8. How many students are there in each club? Show the clubID and the count
 -- TODO: Student Answer Here....
