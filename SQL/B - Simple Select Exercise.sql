@@ -6,7 +6,7 @@ Use [A01-School]
 GO
 
 --1.	Select the average Mark from all the Marks in the registration table
-SELECT  AVG(Mark) AS 'Average Mark'
+SELECT  AVG(Mark) AS 'Average Mark' -- We need to give the column an alias/title
 FROM    Registration
 
 --1.a.  Show the average mark, the total of all marks, and a count of all marks.
@@ -20,6 +20,9 @@ FROM    Registration
 SELECT  AVG(Mark) AS 'Average Mark' -- Some Aggregate functions expect to work with numbers
 FROM    Registration
 WHERE   CourseId = 'DMIT104'
+-- Exploring - What are all the marks in Registration?
+-- SELECT * FROM Registration ORDER BY CourseId
+
 
 --3.	Select how many students are there in the Student Table
 SELECT  COUNT(FirstName) AS 'Student Count'
@@ -37,7 +40,7 @@ FROM    Staff
 -- 3.d  Do a count of the people in the Staff table who are no longer working here
 --      Refresh your memory about all the data in the Staff table
 SELECT  * FROM Staff
-SELECT  COUNT(DateReleased) AS 'Retired Staff'
+SELECT  COUNT(DateReleased) AS 'Retired Staff' -- Note that this COUNT() ignored the NULL values
 FROM    Staff
 
 --4.	Select how many students have taken (have a grade for) DMIT152

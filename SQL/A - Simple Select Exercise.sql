@@ -1,7 +1,7 @@
 --SIMPLE SELECT EXERCISE 1
 
 USE [A01-School]
-GO
+GO -- Tells it to run the above code as a "batch"
 
 -- Simple Select, without any other clauses
 SELECT  'Dan', 'Gilleland'
@@ -11,7 +11,7 @@ SELECT  'Dan' + ' ' + 'Gilleland', 18 * 52, '5' + '10'
 
 -- Specify a column name with some hard-code/calculated values
 SELECT  'Dan' + ' ' + 'Gilleland' AS 'Instructor',
-        19 * 52 AS 'Weeks at the job'
+        20 * 52 AS 'Weeks at the job'
 
 -- Let's use the SELECT statement with database tables
 
@@ -49,7 +49,7 @@ FROM    Student
 --      and sort the results by the last name
 SELECT    FirstName, LastName
 FROM      Student
-ORDER BY  LastName
+ORDER BY  LastName -- By default, sorting will be in ASCENDING order
 -- 2.d. Select the first and last names of all the students,
 --      and sort the results by the last name, then by the first name
 SELECT    FirstName, LastName
@@ -70,7 +70,7 @@ WHERE  CourseID = 'DMIT101'
 
 --5. Select the Staff names who have job positionID of 3
 SELECT FirstName, LastName
-       --,PositionID -- Press [ctrl] + k, then [ctrl] + u to un-comment
+--       ,PositionID -- Press [ctrl] + k, then [ctrl] + u to un-comment
 FROM   Staff
 WHERE  PositionID = 3
 
@@ -78,9 +78,13 @@ WHERE  PositionID = 3
 SELECT  PositionID, PositionDescription
 FROM    Position
 
+-- Explore Intellisense
+SELECT  Club.ClubId, Club.ClubName
+FROM    Club
+
 --6.    Select the Course Names whose course hours are less than 96
 SELECT  C.CourseName
-FROM    Course C -- I can have an alias to the table name
+FROM    Course AS C -- I can have an alias to the table name
 WHERE   C.CourseHours < 96
 -- Type with me the following...
 SELECT  ST.LastName, ST.DateHired, ST.DateReleased
@@ -106,6 +110,7 @@ WHERE   WithdrawYN IS NULL -- we use IS NULL instead of = NULL, because = NULL w
 
 -- 7.b. Select the student ids of students who have withdrawn from a course
 SELECT  StudentID
+        , WithdrawYN
 FROM    Registration
 WHERE   WithdrawYN = 'Y'
 
