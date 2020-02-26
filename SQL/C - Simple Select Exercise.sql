@@ -30,7 +30,7 @@ SELECT  PaymentTypeID,                              -- Non-aggregate column (btw
         COUNT(PaymentTypeID) AS 'Count of Pay Type' -- Aggregate column
 FROM    Payment
 GROUP BY PaymentTypeID
-ORDER BY COUNT(PaymentTypeID) ASC
+ORDER BY COUNT(PaymentTypeID) DESC -- Fixed! Now it is in Descending order
 -- HELP! Is the answer above correct?? How can we fix it?
 /* A note on ORDER BY
    - The ORDER BY clause will, by default, do the sorting in ascending order.
