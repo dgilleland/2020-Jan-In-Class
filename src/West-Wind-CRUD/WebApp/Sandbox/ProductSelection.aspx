@@ -25,12 +25,12 @@
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Unit Price">
                         <ItemTemplate>
-                            <%# Item.Price.ToString("C") %>
+                            <asp:Label id="Price" runat="server" Text='<%# Item.Price.ToString("C") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Qty/Unit">
                         <ItemTemplate>
-                            <%# Item.QuantityPerUnit %>
+                            <asp:Label ID= "Qty" runat="server" Text="<%# Item.QuantityPerUnit %>" />
                         </ItemTemplate>
                     </asp:TemplateField>
                     <asp:ButtonField 
@@ -41,6 +41,35 @@
                 </Columns>
             </asp:GridView>
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <asp:GridView ID="DestinationGridView" runat="server"
+                AutoGenerateColumns="false"
+                ItemType="WestWindSystem.DataModels.ProductInfo"
+                OnRowCommand="SourceProductsGridView_RowCommand"
+                OnSelectedIndexChanged="DestinationGridView_SelectedIndexChanged">
+                <Columns>
+                    <asp:ButtonField 
+                        ButtonType="Button"
+                        CommandName="Select"
+                        Text="Remove"
+                        HeaderText="Action" />
+                    <asp:TemplateField HeaderText="Name">
+                        <ItemTemplate>
+                            <asp:Label id="ProductName" runat="server" Text="<%# Item.Name %>" />
+                        </ItemTemplate>                        
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Unit Price">
+                        <ItemTemplate>
+                            <asp:Label id="Price" runat="server" Text='<%# Item.Price.ToString("C") %>' />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                    <asp:TemplateField HeaderText="Qty/Unit">
+                        <ItemTemplate>
+                            <asp:Label ID= "Qty" runat="server" Text="<%# Item.QuantityPerUnit %>" />
+                        </ItemTemplate>
+                    </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </div>
     </div>
 </asp:Content>
