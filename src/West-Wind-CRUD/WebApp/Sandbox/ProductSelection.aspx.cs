@@ -65,6 +65,7 @@ namespace WebApp.Sandbox
 
             // Remove the item from the source gridview
             var existing = GetExistingProducts(SourceProductsGridView);
+            var avg = existing.Average(x => x.Price);
             existing.RemoveAt(SourceProductsGridView.SelectedIndex);
             SourceProductsGridView.DataSource = existing;
             SourceProductsGridView.DataBind();
