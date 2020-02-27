@@ -43,7 +43,7 @@ GO
     SELECT FirstName, MONTH(Birthdate) AS 'Birth Month' FROM Student
     WHERE  MONTH(Birthdate) = DATEPART(MONTH, GETDATE())
 	-- YEAR
-	-- DATEDIFF - Staff.DateHired - DateReleased
+	-- DATEDIFF - DateReleased - Staff.DateHired
 	SELECT FirstName + ' ' + LastName AS 'Staff Name',
 	       DATEDIFF(DAY, DateHired, DateReleased) AS 'Days Employed'
            -->> DateReleased - DateHired, expressed as number of Days
@@ -118,7 +118,7 @@ WHERE   Mark IS NOT NULL
     LOWER ( character_expression )                                          SELECT LOWER('AWESOME!')
     UPPER ( character_expression )                                          SELECT UPPER('boring')
     REPLACE ( string_expression , string_pattern , string_replacement )     SELECT REPLACE('Daniel', 'iel', 'YELL')
-
+    CHARINDEX ( substring , string [, start_location] )                     SELECT CHARINDEX(' ', 'Hello World')
 
 
     DATE Functions
