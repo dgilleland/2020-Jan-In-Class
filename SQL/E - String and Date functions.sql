@@ -29,6 +29,8 @@ GO
 	-- Modifying
 		-- LTRIM, RTRIM -- To remove whitespace from the left or the right
 		-- UPPER, LOWER -- Return upper and lower characters
+    -- Search a string for another string
+    SELECT CHARINDEX(' ', 'Hello World')
 
 -- Date Functions
 	-- GETDATE()
@@ -72,10 +74,10 @@ WHERE   FirstName = 'Tess'
 SELECT  DATEDIFF(dd, 'Jan 1, 2000', GETDATE())
 
 -- 3. How Many Students where born in each month? Display the Month Name and the Number of Students.
-SELECT  DATENAME(mm, Birthdate) AS 'Month Name',
-        COUNT(1) AS 'Number of Students'
+SELECT  DATENAME(mm, Birthdate) AS 'Month Name', -- Non-aggregate
+        COUNT(1) AS 'Number of Students'         -- Aggregate
 FROM    Student
-GROUP BY DATENAME(mm, Birthdate)
+GROUP BY DATENAME(mm, Birthdate)                 -- Group by the non-aggregates
 
 -- 4. Select the Names of all the students born in December.
 SELECT  FirstName, LastName

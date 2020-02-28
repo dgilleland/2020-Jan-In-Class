@@ -3,6 +3,15 @@ USE [A01-School]
 GO
 
 --1. How many staff are there in each position? Select the number and Position Description
+-- Exploration
+SELECT  PositionID, PositionDescription FROM Position
+SELECT  FirstName + ' ' + LastName, PositionID FROM Staff
+-- Show the data when joined
+SELECT  PositionDescription, FirstName + ' ' + LastName
+FROM    Staff AS S
+    INNER JOIN Position AS P
+        ON S.PositionID = P.PositionID
+-- Answer
 SELECT  PositionDescription,                    --  <-- non-aggregate
         COUNT(S.StaffID) AS 'Number of Staff'   --  <-- aggregate
 FROM    Staff AS S
