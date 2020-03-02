@@ -33,6 +33,14 @@ WHERE CourseId = 'DMIT172'
 
 -- 10. Which student(s) have the highest average mark? Hint - This can only be done by a subquery.
 -- TODO: Student Answer Here...
+SELECT StudentID
+FROM   Registration
+GROUP BY StudentID
+HAVING AVG(Mark) >= ALL --  A number can't be 'GREATER THAN or EQUAL TO' a NULL value
+        (SELECT AVG(Mark)
+         FROM   Registration
+         WHERE  Mark IS NOT NULL -- Ah, tricky!
+         GROUP BY StudentID)
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
