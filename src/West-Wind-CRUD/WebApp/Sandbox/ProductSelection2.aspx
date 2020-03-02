@@ -13,7 +13,10 @@
         <div class="col-md-6">
             <asp:ListView ID="AvailableProductsListView" runat="server"
                  OnSelectedIndexChanged="AvailableProductsListView_SelectedIndexChanged">
-
+                <ItemTemplate>
+                    <asp:LinkButton ID="AddProduct" runat="server"
+                         CommandName="Select">Add</asp:LinkButton>
+                </ItemTemplate>
             </asp:ListView>
         </div>
         <div class="col-md-6">

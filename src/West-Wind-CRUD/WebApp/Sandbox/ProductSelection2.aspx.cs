@@ -16,7 +16,11 @@ namespace WebApp.Sandbox
 
         protected void AvailableProductsListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            // Loop through my ListView
+            foreach(ListViewDataItem item in AvailableProductsListView.Items)
+            {
+                
+            }
         }
     }
 }
