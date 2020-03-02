@@ -23,3 +23,6 @@ The comprehensive example that demonstrates the topics in the course is found in
 - **UX and Forms**
   - [Eye-Max](../../src/Eye-Max/)
 
+### Walk-Through Demos
+
+![Shipping Orders](Shipping-Orders.svg)
