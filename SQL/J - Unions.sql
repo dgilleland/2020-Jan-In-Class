@@ -65,6 +65,7 @@ AS
         INNER JOIN Position P ON S.PositionID = P.PositionID
 GO
 
+SELECT * FROM RollCall
 
 --2.  Create a list of course IDs and the number of students in the course and
 --    UNION that with a list of the course IDs and the MaxStudents of the course.
