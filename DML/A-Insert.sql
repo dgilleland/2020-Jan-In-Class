@@ -16,6 +16,12 @@ GO -- Execute the code up to this point as a single batch
     VALUES ('A', 'Value', 'Per', 'Column'),
            ('Another', 'Row', 'Of', 'Values')
     
+    When inserting values, you can use subqueries for individual values
+    provided that the subquery returns a single value:
+
+    INSERT INTO TableName(Comma, Separated, ListOf, ColumnNames)
+    VALUES ('A', (SELECT SingleValue FROM SomeTable), 'Per', 'Column')
+    
     Another syntax for the INSERT statement is to use a SELECT clause in place
     of the VALUES clause. This is used for zero-to-many possible rows to insert.
 
@@ -63,7 +69,7 @@ VALUES ('START', 'Small Tech And Research Teams'),
 -- 4. In your web browser, use https://randomuser.me/ to get information on three
 --    people to add as new students. Write separate insert statement for each new student.
 -- TODO: Student Answer Here....
-
+-- sp_help Student
 
 -- 5. Enroll each of the students you've added into the DMIT777 course.
 --    Use 'Dan Gilleland' as the instructor. At this point, their marks should be NULL.
