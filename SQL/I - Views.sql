@@ -2,6 +2,20 @@
 USE [A01-School]
 GO
 
+-- A "view" is a virtual table based on the result-set of an SQL statement.
+-- There are different "kinds" of "views" (virtual tables) that we can
+-- create, but the only ones we're interested in here are the kind that
+-- don't actually store any information directly.
+-- The data in a view comes from the other table(s) in the database.
+-- It is safe to drop a view, because the view does not store any information.
+--
+-- The advantages of using a View are
+-- 1) It's a way of "saving" our query on the database
+-- 2) A view can, itself, be used in a FROM clause
+-- 3) Because it's a "stored" query on the database, the database engine can
+--    perform some "optimizations" to make it run quite quickly.
+
+
 --1.  Create a view of staff full names called StaffList.
 IF OBJECT_ID('StaffList', 'V') IS NOT NULL
     DROP VIEW StaffList
@@ -67,6 +81,9 @@ AS
         -- "The OFFSET is the number of rows to skip before including them in the result."
         OFFSET 0 ROWS
 GO
+
+-- SELECT * FROM StaffExperienceRaw
+
 IF OBJECT_ID('StaffExperience', 'V') IS NOT NULL
     DROP VIEW StaffExperience
 GO
