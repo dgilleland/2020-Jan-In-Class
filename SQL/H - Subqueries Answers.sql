@@ -82,3 +82,10 @@ HAVING  COUNT(CourseId) >= ALL (SELECT COUNT(CourseId)
 
 -- 14. Which students are most active in the clubs?
 -- TODO: Student Answer Here...
+SELECT  FirstName + ' ' + LastName
+      --, COUNT(A.ClubId)
+FROM    Student AS S
+    INNER JOIN Activity AS A
+        ON S.StudentID = A.StudentID
+GROUP BY FirstName + ' ' + LastName
+HAVING  COUNT(ClubId) >= ALL (SELECT COUNT(ClubId) FROM Activity GROUP BY StudentID)
