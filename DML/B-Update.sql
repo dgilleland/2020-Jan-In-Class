@@ -46,7 +46,9 @@ WHERE  City = 'Edm'
 
 -- ======= Practice ========
 -- 5. For each student that does not have a mark in the Registration table,
---    create an update statement that gives each student a different mark.
+--    create an update statement that gives each student a mark.
+-- TIP - Use the RAND() function for a random number. E.g.:
+-- SELECT floor(rand()*101) AS 'Mark'
 -- TODO: Student Answer Here....
 
 -- 6. Choose a student from the previous question and withdraw them from all
@@ -73,9 +75,13 @@ GO
 */
 --6.  Using the StudentGrades view, change the coursename for the capstone course to be 'basket weaving 101'.
 -- TODO: Student Answer Here...
+UPDATE  StudentGrades
+SET     CourseName = 'basket weaving 101'
+WHERE   CourseName = 'Capstone Project'
 
 --7.  Using the StudentGrades view, update the  mark for studentID 199899200 in course dmit152 to be 90.
 -- TODO: Student Answer Here...
 
---8.  Using the StudentGrades view, delete the same record from the previous question.
+--8.  Using the StudentGrades view, see if you can delete the same record from the previous question.
+--    If it doesn't work, then copy the error message here.
 -- TODO: Student Answer Here...
