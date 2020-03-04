@@ -12,6 +12,7 @@ GO -- Execute the code up to this point as a single batch
     WHERE  ConditionalExpression
 
 */
+
 -- Update Examples
 -- 1. The school thinks it can get a bit more money out of students
 --    because of the popularity of a few of its courses. As such,
@@ -46,7 +47,7 @@ WHERE  City = 'Edm'
 
 -- ======= Practice ========
 -- 5. For each student that does not have a mark in the Registration table,
---    create an update statement that gives each student a different mark.
+--    create a separate update statement that gives each student a different mark.
 -- TODO: Student Answer Here....
 
 -- 6. Choose a student from the previous question and withdraw them from all
