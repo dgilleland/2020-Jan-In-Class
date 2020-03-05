@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,15 +8,18 @@ using WestWindSystem.DataModels.OrderProcessing;
 
 namespace WestWindSystem.BLL
 {
+    [DataObject]
     public class OrderProcessingController
     {
         #region Query Methods
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<OutstandingOrder> LoadOrders(int supplierID)
         {
             // TODO: Implement LoadOrders
             throw new NotImplementedException();
         }
 
+        [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ShipperSelection> ListShippers()
         {
             // TODO: Implement ListShippers
