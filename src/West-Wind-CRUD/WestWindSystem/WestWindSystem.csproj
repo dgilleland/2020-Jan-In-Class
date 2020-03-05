@@ -57,8 +57,10 @@
     <Compile Include="BLL\OrderProcessingController.cs" />
     <Compile Include="DataModels\CategorizedProducts.cs" />
     <Compile Include="DataModels\OrderProcessing\OutstandingOrder.cs" />
+    <Compile Include="DataModels\OrderProcessing\ProductShipment.cs" />
     <Compile Include="DataModels\OrderProcessing\ProductSummary.cs" />
     <Compile Include="DataModels\OrderProcessing\ShipperSelection.cs" />
+    <Compile Include="DataModels\OrderProcessing\ShippingDirections.cs" />
     <Compile Include="DataModels\OrderProcessing\SupplierSummary.cs" />
     <Compile Include="DataModels\ProductInfo.cs" />
     <Compile Include="DataModels\ProductSummary.cs" />
