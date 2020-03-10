@@ -1,7 +1,6 @@
 <Query Kind="Statements">
   <Connection>
-    <ID>149e3b65-50a0-4b71-a4cd-1724339bc361</ID>
-    <Persist>true</Persist>
+    <ID>10605093-fece-445c-afdc-14b6523b9b64</ID>
     <Server>.</Server>
     <Database>WestWind</Database>
   </Connection>
@@ -41,7 +40,7 @@ var result = from ord in Orders
                     }
              };
 result.Dump();
-var finalResult = from item in result
+var nextResult  = from item in result
                   select new //OutstandingOrder
                   {
                       item.OrderId,
@@ -66,4 +65,15 @@ var finalResult = from item in result
                                                          : detail.Qty
                                          }
                   };
+
+var finalResult = nextResult.Where(x => x.OutstandingItems.Count() > 0);
+
 finalResult.Dump();
+
+
+
+
+
+
+
+

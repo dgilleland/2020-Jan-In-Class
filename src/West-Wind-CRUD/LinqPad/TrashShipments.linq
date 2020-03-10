@@ -1,7 +1,6 @@
 <Query Kind="Statements">
   <Connection>
-    <ID>149e3b65-50a0-4b71-a4cd-1724339bc361</ID>
-    <Persist>true</Persist>
+    <ID>10605093-fece-445c-afdc-14b6523b9b64</ID>
     <Server>.</Server>
     <Database>WestWind</Database>
   </Connection>

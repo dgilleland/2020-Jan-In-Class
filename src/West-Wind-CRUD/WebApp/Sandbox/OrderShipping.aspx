@@ -11,7 +11,43 @@
             <asp:Label ID="ContactName" runat="server" />
             <uc1:MessageUserControl runat="server" ID="MessageUserControl" />
 
-            <asp:ListView ID="ShipmentsListView" runat="server"></asp:ListView>
+            <asp:ListView ID="ShipmentsListView" runat="server"
+                DataSourceID="OutstandingOrdersDataSource"
+                ItemType="WestWindSystem.DataModels.OrderProcessing.OutstandingOrder">
+                <LayoutTemplate>
+                    <table runat="server" id="itemPlaceholderContainer"
+                         class="table table-hover">
+                        <tr runat="server">
+                            <th runat="server">Ship To</th>
+                            <th runat="server">Ordered On</th>
+                            <th runat="server">Required By</th>
+                            <th runat="server"><!-- Select/Expand --></th>
+                        </tr>
+                        <tr runat="server" id="itemPlaceholder"></tr>
+                    </table>
+                </LayoutTemplate>
+                <ItemTemplate>
+                    <tr>
+                        <td>
+                            (<%# Item.OrderID %>)
+                            <%# Item.ShipToName %>
+                        </td>
+                        <td>
+                            <%# Item.OrderedDate.ToString("MMM dd, yyyy") %>
+                        </td>
+                        <td>
+                            <%# Item.RequiredDate.ToString("MMM dd, yyyy") %>
+                            - in <%# Item.DaysToDelivery %> days
+                        </td>
+                        <td>
+                            <asp:LinkButton ID="EditOrder" runat="server"
+                                CommandName="Edit" CssClass="btn btn-default">
+                                Order Details
+                            </asp:LinkButton>
+                        </td>
+                    </tr>
+                </ItemTemplate>
+            </asp:ListView>
 
             <asp:HiddenField ID="TempSupplier" runat="server" Value="3" />
             <asp:ObjectDataSource ID="OutstandingOrdersDataSource" runat="server" OldValuesParameterFormatString="original_{0}" SelectMethod="LoadOrders" TypeName="WestWindSystem.BLL.OrderProcessingController">

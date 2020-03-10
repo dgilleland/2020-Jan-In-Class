@@ -9,9 +9,9 @@ namespace WestWindSystem.DataModels.OrderProcessing
         public string ShipToName { get; set; }
         public DateTime OrderedDate { get; set; }
         public DateTime RequiredDate { get; set; }
-        public int DaysToDelivery
+        public int DaysToDelivery // TODO: Fix bug in calculation for long timespans
         { get { return (RequiredDate - OrderedDate).Days; } } // Calculated
-        public List<ProductSummary> OutstandingItems { get; set; }
+        public IEnumerable<ProductSummary> OutstandingItems { get; set; }
         public string Comments { get; set; }
         public string FullShippingAddress { get; set; }
     }
