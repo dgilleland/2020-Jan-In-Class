@@ -1,5 +1,16 @@
 -- Stored Procedures (Sprocs)
 -- Validating Parameter Values
+--
+-- We can validate parameter values using IF/ELSE statements. An IF/ELSE statement is
+-- called a "flow-control" statement because it controls whether or not another statement
+-- (or statement block) will execute. The grammar of the IF/ELSE statement is as follows:
+-- IF (Conditional_Expression)
+--    Statement-or-Statement-Block -- TRUE side
+-- ELSE
+--    Statement-or-Statement-Block -- FALSE side
+--
+-- where the Conditional_Expression is some kind of expression that will result in a
+-- value of TRUE or FALSE.
 
 USE [A01-School]
 GO
@@ -35,6 +46,12 @@ AS
 RETURN
 GO
 
+-- Demo/Test my stored procedure
+EXEC AddClub 'CLUB', 'Central Library of Unused Books' -- Testing with "good" data
+-- Imagine that the sproc is called with !bad! data
+EXEC AddClub null, 'Gotcha'
+EXEC AddClub 'OOPS', null
+GO
 
 -- 1.b. Modify the AddClub procedure to ensure that the club name and id are actually supplied. Use the RAISERROR() function to report that this data is required.
 ALTER PROCEDURE AddClub
@@ -43,18 +60,25 @@ ALTER PROCEDURE AddClub
     @ClubName   varchar(50)
 AS
     -- Body of procedure here
+    -- I validate by finding out if the data is poor. If so, then I report the problem
     IF @ClubId IS NULL OR @ClubName IS NULL
     BEGIN
         RAISERROR('Club ID and Name are required', 16, 1)
+        -- The 16 is the error number (we are basically constrained to a range of error numbers)
+        -- The 1 is the severity of the error
+        -- We can always use the 16, 1
     END
-    ELSE
+    ELSE -- Otherwise, I proceed to process the data
     BEGIN
         INSERT INTO Club(ClubId, ClubName)
         VALUES (@ClubId, @ClubName)
     END
 RETURN
 GO
-
+-- Imagine that the sproc is called with !bad! data
+EXEC AddClub null, 'Gotcha'
+EXEC AddClub 'OOPS', null
+GO
 -- 2. Make a stored procedure that will find a club based on the first two or more characters of the club's ID. Call the procedure "FindStudentClubs"
 -- The following stored procedure does the query, but without validation
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'FindStudentClubs')
@@ -155,6 +179,8 @@ AS
     IF @StudentId IS NULL OR @FirstName IS NULL OR @LastName IS NULL
         RAISERROR('All parameters are required.', 16, 1)
     ELSE IF NOT EXISTS (SELECT StudentID FROM Student WHERE StudentID = @StudentId)
+        -- The EXISTS() function will return true if there are 1 or more rows,
+        -- otherwise it will return false
         RAISERROR('That student id does not exist', 16, 1)
     ELSE
         UPDATE  Student
