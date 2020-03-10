@@ -69,11 +69,3 @@ var nextResult  = from item in result
 var finalResult = nextResult.Where(x => x.OutstandingItems.Count() > 0);
 
 finalResult.Dump();
-
-
-
-
-
-
-
-
