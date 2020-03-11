@@ -1,6 +1,31 @@
 -- Stored Procedures (Sprocs)
 -- Validating Parameter Values
 
+/*
+We can validate parameter values using IF/ELSE statements. An IF/ELSE statement is
+called a "flow-control" statement because it controls whether or not another statement
+(or statement block) will execute. The grammar of the IF/ELSE statement is as follows:
+
+IF (conditional_expression)
+    Statement_or_StatementBlock -- TRUE side
+ELSE
+    Statement_or_StatementBlock -- FALSE side
+
+where the conditional_expression is some kind of expression that results in a boolean
+(TRUE/FALSE) value, and Statement_or_StatementBlock is a single item that is executed
+on either the true or false side of the IF/ELSE statement.
+A "statement block" is one or more statements inside of a pair of BEGIN/END keywords.
+For example, the following statement block consists of two statements (an INSERT and
+a SELECT), but it can be considered a single "block" of statements:
+
+BEGIN
+    INSERT INTO SomeTable(Some, Column, Names)
+    VALUES (@some, @param, @values)
+    SELECT @@IDENTITY -- to get the generated primary key
+END
+
+ */
+
 USE [A01-School]
 GO
 
@@ -35,17 +60,28 @@ AS
 RETURN
 GO
 
+-- Demo/Test my stored procedure
+EXEC AddClub 'CLUB', 'Central Library of Unused Books' -- Testing with "good" data
+-- Imagine that the sproc is called with !bad! data...
+EXEC AddClub null, 'Gotcha'
+EXEC AddClub 'OOPS', null
+GO
 
 -- 1.b. Modify the AddClub procedure to ensure that the club name and id are actually supplied. Use the RAISERROR() function to report that this data is required.
 ALTER PROCEDURE AddClub
     -- Parameters here
+    -- In SQL, the variables/parameter names always start with the @ symbol
     @ClubId     varchar(10),
     @ClubName   varchar(50)
 AS
     -- Body of procedure here
+    -- I validate by finding out if the data is poor. If so, then I report the problem.
     IF @ClubId IS NULL OR @ClubName IS NULL
     BEGIN
         RAISERROR('Club ID and Name are required', 16, 1)
+        -- The 16 is the error number (we are basically constrained to a range of numbers)
+        -- The 1 is the severity of the error
+        -- We can always use the 16, 1
     END
     ELSE
     BEGIN
@@ -53,6 +89,9 @@ AS
         VALUES (@ClubId, @ClubName)
     END
 RETURN
+GO
+EXEC AddClub null, 'Gotcha'
+EXEC AddClub 'OOPS', null
 GO
 
 -- 2. Make a stored procedure that will find a club based on the first two or more characters of the club's ID. Call the procedure "FindStudentClubs"
