@@ -84,8 +84,16 @@ namespace WestWindSystem.BLL
         [DataObjectMethod(DataObjectMethodType.Select)]
         public List<ShipperSelection> ListShippers()
         {
-            // TODO: Implement ListShippers
-            throw new NotImplementedException();
+            using(var context = new WestWindContext())
+            {
+                var results = from company in context.Shippers
+                              select new ShipperSelection
+                              {
+                                  Name = company.CompanyName,
+                                  ShipperID = company.ShipperID
+                              };
+                return results.ToList();
+            }
         }
 
         public SupplierSummary GetSupplier(int supplierID)
