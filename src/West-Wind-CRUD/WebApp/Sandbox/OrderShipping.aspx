@@ -13,6 +13,7 @@
 
             <asp:ListView ID="ShipmentsListView" runat="server"
                 DataSourceID="OutstandingOrdersDataSource"
+                OnItemCommand="ShipmentsListView_ItemCommand"
                 ItemType="WestWindSystem.DataModels.OrderProcessing.OutstandingOrder">
                 <LayoutTemplate>
                     <table runat="server" id="itemPlaceholderContainer"

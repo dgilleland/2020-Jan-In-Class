@@ -106,15 +106,53 @@ namespace WestWindSystem.BLL
         #region Command Methods
         public void ShipOrder(int orderId, ShippingDirections directions, List<ProductShipment> items)
         {
-            // TODO: ShipOrder - Validation of input:
-            //  - OrderId must exist
-            //  - Shipper must exist
-            //  - Must have one or more items to ship
-            //  - ProductIds must exist/valid
-            //  - Quantities must be greater than 0 and less than the number/qty outstanding on the order
-            //  - Freight charge is either null or a value greater than zero
-            // TODO: ShipOrder - Add a new Shipment to the database
-            // TODO: ShipOrder - Add new ManifestItem objects to the new shipment
+            // 0) Pre-check - make sure we don't have NULL objects
+            if (directions == null) throw new ArgumentNullException("No shipping directions provided.");
+            if (items == null) throw new ArgumentNullException("No shipment items were provided.");
+
+            using (var context = new WestWindContext())
+            {
+                #region Business Rule validations
+                // TODO: ShipOrder - Validation of input:
+                //  - OrderId must exist/valid
+                var existingOrder = context.Orders.Find(orderId); // find by PK
+                if (existingOrder == null)
+                    throw new Exception("Order does not exist.");
+                if (existingOrder.Shipped)
+                    throw new Exception("This order has already been completed.");
+                if (!existingOrder.OrderDate.HasValue)
+                    throw new Exception("This order is not ready to be shipped (no order date has been specified).");
+
+                //  - Shipper must exist
+                var shipper = context.Shippers.Find(directions.ShipperId); // find by PK
+                if (shipper == null)
+                    throw new Exception("Invalid shipper ID.");
+                //  - Freight charge is either null or a value greater than zero
+                // TODO: Q) Should I just convert a $0 charge to a null??
+                if (directions.FreightCharge.HasValue && directions.FreightCharge <= 0)
+                    throw new Exception("Freight charge must be either a positive value or no charge.");
+
+                //  - Must have one or more items to ship
+                if (!items.Any()) // if there are not any items
+                    throw new Exception("No products identified for shipping.");
+
+                foreach (var item in items)
+                {
+                    if (item == null) throw new Exception("Blank item listed in the products to be shipped.");
+                    //  - ProductIds must exist/valid (this product must be part of the original order)
+                    if (!existingOrder.OrderDetails.Any(x => x.ProductID == item.ProductId)) // if the order's details do NOT have that product in the collection
+                        throw new Exception($"The product {item.ProductId} does not exist on the order.");
+                    //  - Quantities must be greater than 0 
+                    //  - Quantities must be less than the number/qty outstanding on the order
+                }
+                #endregion
+
+                #region Processing the order as a transaction
+                // TODO: ShipOrder - Add a new Shipment to the database
+                // TODO: ShipOrder - Add new ManifestItem objects to the new shipment
+                #endregion
+            }
+            throw new NotImplementedException("ShipOrder is not yet implemented");
         }
         #endregion
     }
