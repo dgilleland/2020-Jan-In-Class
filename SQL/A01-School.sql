@@ -1,8 +1,8 @@
 /* School database - DMIT-1508-A01, Jan 2017 
    Table Creation and Load Data Script 
    **************************************** */
-
--- CREATE DATABASE [A01-School]
+IF DB_ID('A01-School') IS NULL
+    CREATE DATABASE [A01-School]
 GO
 
 USE [A01-School]
