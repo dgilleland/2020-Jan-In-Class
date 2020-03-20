@@ -2,7 +2,8 @@
    Table Creation and Load Data Script 
    **************************************** */
 
--- CREATE DATABASE [A01-School]
+IF DB_ID('A01-School') IS NULL
+    CREATE DATABASE [A01-School]
 GO
 
 USE [A01-School]
