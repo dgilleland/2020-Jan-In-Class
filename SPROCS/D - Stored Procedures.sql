@@ -183,13 +183,65 @@ EXEC RemoveClubMembership 'CSS' -- The second time this is run, there will be no
 
 -- 4) Create a stored procedure called OverActiveMembers that takes a single number: ClubCount. This procedure should return the names of all members that are active in as many or more clubs than the supplied club count.
 --    (p.s. - You might want to make sure to add more members to more clubs, seeing as tests for the last question might remove a lot of club members....)
-
-
+-- STUDENT ANSWERS HERE
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'OverActiveMembers')
+    DROP PROCEDURE OverActiveMembers
+GO
+CREATE PROCEDURE OverActiveMembers
+    @ClubCount  int
+AS
+    IF @ClubCount IS NULL OR @ClubCount < 0
+        RAISERROR('ClubCount cannot be negative', 16, 1)
+    ELSE
+        SELECT  FirstName, LastName
+        FROM    Student
+        WHERE   StudentID IN
+                (SELECT StudentID FROM ACTIVITY
+                 GROUP BY StudentID HAVING COUNT(StudentID) >= @ClubCount)
+RETURN
+GO
+-- Testing
+SELECT StudentID, COUNT(ClubID) FROM Activity GROUP BY StudentID
+EXEC OverActiveMembers 2
+EXEC OverActiveMembers 3
+EXEC OverActiveMembers 1
+EXEC OverActiveMembers 0
+EXEC OverActiveMembers NULL
+GO
 
 -- 5) Create a stored procedure called ListStudentsWithoutClubs that lists the full names of all students who are not active in a club.
-
+-- STUDENT ANSWERS HERE
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'ListStudentsWithoutClubs')
+    DROP PROCEDURE ListStudentsWithoutClubs
+GO
+CREATE PROCEDURE ListStudentsWithoutClubs
+AS
+    SELECT  FirstName + ' ' + LastName AS 'FullName'
+    FROM    Student
+    WHERE   StudentID NOT IN (SELECT DISTINCT StudentID FROM Activity)
+RETURN
+GO
+EXEC ListStudentsWithoutClubs
 
 
 -- 6) Create a stored procedure called LookupStudent that accepts a partial student last name and returns a list of all students whose last name includes the partial last name. Return the student first and last name as well as their ID.
+-- STUDENT ANSWERS HERE
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'LookupStudent')
+    DROP PROCEDURE LookupStudent
+GO
+CREATE PROCEDURE LookupStudent
+    @PartialLastName    varchar(35)
+AS
+    IF @PartialLastName IS NULL OR LEN(@PartialLastName) = 0
+        RAISERROR('Partial last name is required an must be at least a single character', 16, 1)
+    ELSE
+        SELECT  FirstName, LastName, StudentID
+        FROM    Student
+        WHERE   LastName LIKE '%' + @PartialLastName + '%'
+RETURN
+GO
+EXEC LookupStudent 'oo'
+EXEC LookupStudent ''
+EXEC LookupStudent NULL
 
 
