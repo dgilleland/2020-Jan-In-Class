@@ -102,8 +102,6 @@ EXEC TransferCourse 5, '2004J', 'DMIT152', 'DMIT101'            -- Bad StudentID
 EXEC TransferCourse 199899200, '2020J', 'DMIT152', 'DMIT101'    -- Bad Semester
 EXEC TransferCourse 199899200, '2004J', 'DMIT101', 'DMIT999'    -- Non-existing Course to enter
 
-
-
 -- 2. Add a stored procedure called AdjustMarks that takes in a course ID. The procedure should adjust the marks of all students for that course by increasing the mark by 10%. Be sure that nobody gets a mark over 100%.
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_TYPE = N'PROCEDURE' AND ROUTINE_NAME = 'AdjustMarks')
     DROP PROCEDURE AdjustMarks
