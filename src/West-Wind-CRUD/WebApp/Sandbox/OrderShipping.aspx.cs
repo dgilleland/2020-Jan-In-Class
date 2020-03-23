@@ -44,7 +44,7 @@ namespace WebApp.Sandbox
                     shipInfo.FreightCharge = price;
 
                 List<ProductShipment> goods = new List<ProductShipment>();
-                GridView gv = e.Item.FindControl("") as GridView;
+                GridView gv = e.Item.FindControl("ProductsGridView") as GridView;
                 if(gv != null)
                 {
                     // Extract the data from each row in the GridView

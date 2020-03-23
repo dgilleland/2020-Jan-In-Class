@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WestWindSystem.DataModels.OrderProcessing;
 using WestWindSystem.DAL;
+using WestWindSystem.Entities;
 
 namespace WestWindSystem.BLL
 {
@@ -115,44 +116,90 @@ namespace WestWindSystem.BLL
                 #region Business Rule validations
                 // TODO: ShipOrder - Validation of input:
                 //  - OrderId must exist/valid
+                var violations = new List<Exception>();
+
                 var existingOrder = context.Orders.Find(orderId); // find by PK
                 if (existingOrder == null)
-                    throw new Exception("Order does not exist.");
-                if (existingOrder.Shipped)
-                    throw new Exception("This order has already been completed.");
-                if (!existingOrder.OrderDate.HasValue)
-                    throw new Exception("This order is not ready to be shipped (no order date has been specified).");
-
+                    violations.Add(new Exception("Order does not exist."));
+                else
+                {
+                    if (existingOrder.Shipped)
+                        violations.Add(new Exception("This order has already been completed."));
+                    if (!existingOrder.OrderDate.HasValue)
+                        violations.Add(new Exception("This order is not ready to be shipped (no order date has been specified)."));
+                }
                 //  - Shipper must exist
                 var shipper = context.Shippers.Find(directions.ShipperId); // find by PK
                 if (shipper == null)
-                    throw new Exception("Invalid shipper ID.");
+                    violations.Add(new Exception("Invalid shipper ID."));
                 //  - Freight charge is either null or a value greater than zero
                 // TODO: Q) Should I just convert a $0 charge to a null??
                 if (directions.FreightCharge.HasValue && directions.FreightCharge <= 0)
-                    throw new Exception("Freight charge must be either a positive value or no charge.");
+                    violations.Add(new Exception("Freight charge must be either a positive value or no charge."));
 
                 //  - Must have one or more items to ship
                 if (!items.Any()) // if there are not any items
-                    throw new Exception("No products identified for shipping.");
+                    violations.Add(new Exception("No products identified for shipping."));
 
                 foreach (var item in items)
                 {
-                    if (item == null) throw new Exception("Blank item listed in the products to be shipped.");
-                    //  - ProductIds must exist/valid (this product must be part of the original order)
-                    if (!existingOrder.OrderDetails.Any(x => x.ProductID == item.ProductId)) // if the order's details do NOT have that product in the collection
-                        throw new Exception($"The product {item.ProductId} does not exist on the order.");
-                    //  - Quantities must be greater than 0 
-                    //  - Quantities must be less than the number/qty outstanding on the order
+                    if (item == null) violations.Add(new Exception("Blank item listed in the products to be shipped."));
+                    else
+                    {
+                        //  - ProductIds must exist/valid (this product must be part of the original order)
+                        if (!existingOrder.OrderDetails.Any(x => x.ProductID == item.ProductId)) // if the order's details do NOT have that product in the collection
+                            violations.Add(new Exception($"The product {item.ProductId} does not exist on the order."));
+                        //  - Quantities must be greater than 0 
+                        //  - Quantities must be less than the number/qty outstanding on the order
+                    }
+                }
+
+                // Check to see if any problems were identified
+                if(violations.Any())
+                {
+                    throw new  BusinessRuleException(nameof(ShipOrder), violations);
                 }
                 #endregion
 
                 #region Processing the order as a transaction
-                // TODO: ShipOrder - Add a new Shipment to the database
-                // TODO: ShipOrder - Add new ManifestItem objects to the new shipment
+                // 1) Create a new Shipment
+                var ship = new Shipment // entity class
+                {
+                    OrderID = orderId,
+                    ShipVia = directions.ShipperId,
+                    TrackingCode = directions.TrackingCode,
+                    FreightCharge = directions.FreightCharge.HasValue
+                                  ? directions.FreightCharge.Value
+                                  : 0,
+                    ShippedDate = DateTime.Now // grab the current date/time
+                };
+
+                // 2) Create manifest items for my shipment
+                foreach(var item in items)
+                {
+                    // Notice that I'm adding the manifes item to the Shipment object
+                    // rather than directly to the database context.
+                    // That's because, by adding to the Shipment object, the correct
+                    // values for foreign key fields will be assigned to the new data
+                    // (because the ManifestItem.ShipmentID can only be known after
+                    // the Shipment has been inserted - Shipment.ShipmentID is an
+                    // IDENTITY column in the database).
+                    ship.ManifestItems.Add(new ManifestItem
+                    {
+                        ProductID = item.ProductId,
+                        ShipQuantity = item.Quantity
+                    });
+                }
+
+                // TODO: 3) Check if the order is complete; if so, update Order.Shipped
+
+                // 4) Add the shipment to the database context
+                context.Shipments.Add(ship);
+
+                // 5) Save the changes (as a single transaction)
+                context.SaveChanges();
                 #endregion
             }
-            throw new NotImplementedException("ShipOrder is not yet implemented");
         }
         #endregion
     }
