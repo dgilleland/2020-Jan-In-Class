@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity; // Allows access to the .SetInitializer<>() extension method for the DbContext's Database property
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -6,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using WebApp.Admin;
 using WebApp.Models;
 
 namespace WebApp.Models
@@ -14,6 +16,11 @@ namespace WebApp.Models
     // ApplicationUser is like one of our Entity classes
     public class ApplicationUser : IdentityUser
     {
+        #region Additional Properties
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        #endregion
+
         public ClaimsIdentity GenerateUserIdentity(ApplicationUserManager manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -34,6 +41,7 @@ namespace WebApp.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer<ApplicationDbContext>(new SecurityDbContextInitializer());
         }
 
         public static ApplicationDbContext Create()
