@@ -76,7 +76,38 @@ EXEC DissolveClub 'CSS'
 EXEC DissolveClub 'NASA1'
 EXEC DissolveClub 'WHA?'
 
--- 2. Create a stored procedure called ArchivePayments. This stored procedure must transfer all payment records to the StudentPaymentArchive table. After archiving, delete the payment records.
+-- 2. In response to recommendations in our business practices, we are required to create an audit record of all changes to the Payment table. As such, all updates and deletes from the payment table will have to be performed through stored procedures rather than direct table access. For these stored procedures, you will need to use the following PaymentHistory table.
+GO
+IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'PaymentHistory')
+    DROP TABLE PaymentHistory
+
+CREATE TABLE PaymentHistory
+(
+    AuditID         int
+        CONSTRAINT PK_PaymentHistory
+        PRIMARY KEY
+        IDENTITY(10000,1)
+                                NOT NULL,
+    PaymentID       int         NOT NULL,
+    PaymentDate     datetime    NOT NULL,
+    PriorAmount     money       NOT NULL,
+    PaymentTypeID   tinyint     NOT NULL,
+    StudentID       int         NOT NULL,
+    DMLAction       char(6)     NOT NULL
+        CONSTRAINT CK_PaymentHistory_DMLAction
+            CHECK  (DMLAction IN ('UPDATE', 'DELETE'))
+)
+GO
+
+-- 2.a. Create a stored procedure called UpdatePayment that has a parameter to match each column in the Payment table. This stored procedure must first record the specified payment's data in the PaymentHistory before applying the update to the Payment table itself.
+GO
+
+-- 2.b. Create a stored procedure called DeletePayment that has a parameter to match each column in the Payment table. This stored procedure must first record the specified payment's data in the PaymentHistory before removing the payment from the Payment table.
+GO
+
+
+
+-- 3. Create a stored procedure called ArchivePayments. This stored procedure must transfer all payment records to the StudentPaymentArchive table. After archiving, delete the payment records.
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'StudentPaymentArchive')
     DROP TABLE StudentPaymentArchive
 
