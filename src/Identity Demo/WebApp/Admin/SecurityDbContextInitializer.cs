@@ -32,7 +32,8 @@ namespace WebApp.Admin
             #endregion
 
             #region Seed the user
-            // First, creat the administrator for the site
+            #region Create Admin
+            // First, create the administrator for the site
             // 1) Grab some data from the configuration
             string adminEmail = ConfigurationManager.AppSettings["adminEmail"];
             string initialPassword = ConfigurationManager.AppSettings["adminPassword"];
@@ -54,6 +55,18 @@ namespace WebApp.Admin
                 var user = userManager.FindByName(Settings.AdminUser);
                 userManager.AddToRole(user.Id, Settings.AdminRole);
             }
+            #endregion
+
+            #region Create other users (employees)
+            // 1) Grab some data from the configuration
+            string defaultPassword = ConfigurationManager.AppSettings["defaultPassword"];
+            // 3) Create our users
+            //foreach(var employee in employeeController.ListEmployees())
+            //{
+
+            //}
+
+            #endregion
             #endregion
         }
     }
