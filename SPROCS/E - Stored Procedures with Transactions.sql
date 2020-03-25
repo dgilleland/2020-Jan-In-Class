@@ -482,7 +482,7 @@ AS
             END
             ELSE
             BEGIN
-                COMMIT TRANSACTION
+                COMMIT TRANSACTION -- Tell the database to "finalize" (make permanent) the temporary INSERT/UPDATE/DELETE statements
             END
         END
     END
