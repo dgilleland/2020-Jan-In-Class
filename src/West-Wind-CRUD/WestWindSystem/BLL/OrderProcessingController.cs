@@ -191,7 +191,28 @@ namespace WestWindSystem.BLL
                     });
                 }
 
-                // TODO: 3) Check if the order is complete; if so, update Order.Shipped
+                // TODONE: 3) Check if the order is complete; if so, update Order.Shipped
+                // Get existing order with the quantities shipped from previous shipments
+                var quantities = from detail in context.OrderDetails // existingOrder.OrderDetails
+                                 where detail.OrderID == orderId
+                                 select new ShipmentItemComparison // An ad-hoc class created for doing my comparisons
+                                 {
+                                     ProductID = detail.ProductID,
+                                     ExpectedQuantity = (int)detail.Quantity,
+                                     ShipQuantity = (from sent in detail.Product.ManifestItems
+                                                    where sent.Shipment.OrderID == orderId
+                                                    select (int) sent.ShipQuantity).Sum()
+                                 };
+                foreach(var toShip in items)
+                {
+                    quantities.Single(x => x.ProductID == toShip.ProductId).ShipQuantity += (int)toShip.Quantity;
+                }
+
+                if (quantities.All(x => x.ShipQuantity == x.ExpectedQuantity))
+                {
+                    existingOrder.Shipped = true;
+                    context.Entry(existingOrder).Property(x => x.Shipped).IsModified = true;
+                }
 
                 // 4) Add the shipment to the database context
                 context.Shipments.Add(ship);
