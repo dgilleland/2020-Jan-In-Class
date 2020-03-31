@@ -31,7 +31,7 @@ namespace Capstone.Projects
 
                 if(hiddenStudentId != null && selectedClientId !=null && letterTextBox != null)
                 {
-                    var dataItem = new StudentAssignment();
+                    var dataItem = new StudentAssignment(); // my POCO object
                     dataItem.StudentId = int.Parse(hiddenStudentId.Value);
                     int clientId;
                     if(int.TryParse(selectedClientId.SelectedValue, out clientId))

@@ -50,10 +50,17 @@ namespace CapstoneSystem.BLL
         public void AssignTeams(List<StudentAssignment> data)
         {
             // Step 0 - Business Rules:
-            // - The smallest team size is four students
-            // - The largest team size is seven students
-            // - Clients with more than seven students must be broken into separate teams, each with a team letter(starting with 'A').
-            // - Only assign students to clients that have been confirmed as participating.
+            var grouppedData = from assignment in data
+                               group assignment by new { assignment.ClientId, assignment.TeamLetter };
+            foreach (var group in grouppedData)
+            {
+                // - The smallest team size is four students
+                if (group.Count() < 4) throw new Exception("Group too small");
+                // - The largest team size is seven students
+                else if (group.Count() > 7) throw new Exception("Group too big");
+                // - Clients with more than seven students must be broken into separate teams, each with a team letter(starting with 'A').
+                // TODO - Only assign students to clients that have been confirmed as participating.
+            }
 
             // Step 1 - OLTP
             using (var context = new CapstoneContext())
@@ -69,7 +76,7 @@ namespace CapstoneSystem.BLL
                 }
 
                 // And... Commit all the changes
-                context.SaveChanges(); // OLTP all done
+                context.SaveChanges(); // OLTP all done - as a Transaction
             }
         }
         #endregion
