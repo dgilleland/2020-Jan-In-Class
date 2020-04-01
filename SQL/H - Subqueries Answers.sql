@@ -30,18 +30,55 @@ WHERE CourseId = 'DMIT172'
 
 -- 9. What is the avg mark for each of the students from Edm? Display their StudentID and avg(mark)
 -- TODO: Student Answer Here...
+SELECT  S.StudentID, AVG(Mark) AS 'Average Mark'
+FROM    Student AS S
+    INNER JOIN Registration AS R
+        ON S.StudentID = R.StudentID
+WHERE   City = 'Edm'
+GROUP BY S.StudentID
 
 -- 10. Which student(s) have the highest average mark? Hint - This can only be done by a subquery.
 -- TODO: Student Answer Here...
+SELECT StudentID
+FROM   Registration
+GROUP BY StudentID
+HAVING AVG(Mark) >= ALL --  A number can't be 'GREATER THAN or EQUAL TO' a NULL value
+        (SELECT AVG(Mark)
+         FROM   Registration
+         WHERE  Mark IS NOT NULL -- Ah, tricky!
+         GROUP BY StudentID)
 
 -- 11. Which course(s) allow the largest classes? Show the course id, name, and max class size.
 -- TODO: Student Answer Here...
+SELECT  CourseId, CourseName, MaxStudents
+FROM    Course
+WHERE   MaxStudents >= ALL (SELECT MaxStudents FROM Course)
 
 -- 12. Which course(s) are the most affordable? Show the course name and cost.
 -- TODO: Student Answer Here...
+SELECT  CourseName, CourseCost
+FROM    Course
+WHERE   CourseCost <= ALL (SELECT CourseCost FROM Course)
 
 -- 13. Which staff have taught the largest classes? (Be sure to group registrations by course and semester.)
 -- TODO: Student Answer Here...
+SELECT  DISTINCT FirstName + ' ' + LastName AS 'StaffName'
+        --, CourseId
+        --, COUNT(CourseId)
+FROM    Staff AS S
+    INNER JOIN Registration AS R
+        ON S.StaffID = R.StaffID
+GROUP BY FirstName + ' ' + LastName, CourseId
+HAVING  COUNT(CourseId) >= ALL (SELECT COUNT(CourseId)
+                                FROM   Registration
+                                GROUP BY StaffID, CourseId)
 
 -- 14. Which students are most active in the clubs?
 -- TODO: Student Answer Here...
+SELECT  FirstName + ' ' + LastName  AS 'StudentName'
+      --, COUNT(A.ClubId)
+FROM    Student AS S
+    INNER JOIN Activity AS A
+        ON S.StudentID = A.StudentID
+GROUP BY FirstName + ' ' + LastName
+HAVING  COUNT(ClubId) >= ALL (SELECT COUNT(ClubId) FROM Activity GROUP BY StudentID)
