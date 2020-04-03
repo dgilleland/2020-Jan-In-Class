@@ -51,9 +51,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BLL\StudentApplicants.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="BLL\CourseCatalogController.cs" />
+    <Compile Include="BLL\RegistrationController.cs" />
     <Compile Include="DAL\GradeBookContext.cs" />
+    <Compile Include="DataModels\ActiveCourse.cs" />
     <Compile Include="DataModels\Applicant.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="Entities\ClassMember.cs" />
