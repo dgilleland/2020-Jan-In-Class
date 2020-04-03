@@ -2,6 +2,35 @@
 USE [A01-School]
 GO
 
+/* About Triggers
+If you recall about Transactions, they are used whenever we have 2 or more of an INSERT/UPDATE/DELETE; these are EXPLICIT transactions.
+A transaction holds the database changes in a temporary state and finalizes it with a COMMIT TRANSACTION.
+
+For individual INSERT/UPDATE/DELETE statements, SQL Server manages its own transaction for that change
+on the database table; this is an IMPLICIT transaction.
+SQL Server does this using two temporary tables it constructs for the DML statement.
+These temporary tables have the same columns that the table being affected has. These tables have special names:
+- deleted
+- inserted
+
+From the perspective of an insert - we are adding a new row(s) of data to a table.
+From the perspective of a delete - we are removing a row(s) of data from a table.
+From the perspective of an update - we are replacing a row(s) of data in a table; replacing deleting, then inserting.
+
+Triggers are our opportunity to interecept the internal transaction that SQL server does for each INSERT/UPDATE/DELETE.
+Triggers are never called directly by our scripts, instead they are called (or "triggered") by SQL server
+as it performs its internal transaction.
+Triggers are "attached" to individual tables. If you drop the table, then the trigger is dropped too.
+
+Triggers are used for:
+
+- Performing complex validations that cannot be done with ordinary CHECK constraints or other contraints.
+  For example, I might need to compare something in this table with some other set of information from
+  multiple tables, or against some aggregates.
+- A opportunity to do some archiving or auditing actions
+- To prevent an INSERT/UPDATE/DELETE from happening (by doing a ROLLBACK TRANSACTION)
+*/
+
 /*
 IF EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[Table_TriggerType]'))
     DROP TRIGGER Table_TriggerType
@@ -32,16 +61,16 @@ RETURN
 GO
 -- Demonstrate the diagnostic trigger
 SELECT * FROM Activity
-INSERT INTO Activity(StudentID, ClubId) VALUES (200494476, 'CIPS')
+INSERT INTO Activity(StudentID, ClubId) VALUES (200494476, 'CIPS') -- Our trigger will be called
 -- (note: generally, it's not a good idea to change a primary key, even part of one)
-UPDATE Activity SET ClubId = 'NASA1' WHERE StudentID = 200494476
+UPDATE Activity SET ClubId = 'NASA1' WHERE StudentID = 200494476 -- You can think of an UPDATE as deleting old data and inserting new data
 DELETE FROM Activity WHERE StudentID = 200494476
 
 -- 1. In order to be fair to all students, a student can only belong to a maximum of 3 clubs. Create a trigger to enforce this rule.
 IF EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[Activity_InsertUpdate]'))
     DROP TRIGGER Activity_InsertUpdate
 GO
-
+-- The trigger we want to create here is because we need to do some complex validation that can't be done in a regular CHECK constraint.
 CREATE TRIGGER Activity_InsertUpdate
 ON Activity
 FOR Insert, Update -- Choose only the DML statement(s) that apply
@@ -68,26 +97,36 @@ SELECT StudentID, FirstName, LastName FROM Student WHERE StudentID = 200495500
 INSERT INTO Activity(StudentID, ClubId)
 VALUES (200495500, 'CIPS') -- Robert Smith
 
+SELECT * FROM Student WHERE StudentID = 200312345
+
 -- The following should succeed
 INSERT INTO Activity(StudentID, ClubId)
 VALUES (200312345, 'CIPS') -- Mary Jane
 
+SELECT * FROM Activity WHERE StudentID = 200312345
+
+SELECT * FROM Activity
+-- The following statement will try to insert multiple rows
 INSERT INTO Activity(StudentID, ClubId)
 VALUES (200122100, 'CIPS'), -- Peter Codd   -- New to the Activity table
        (200494476, 'CIPS'), -- Joe Cool     -- New to the Activity table
        (200522220, 'CIPS'), -- Joe Petroni  -- New to the Activity table
        (200978400, 'CIPS'), -- Peter Pan    -- New to the Activity table
        (200688700, 'CIPS')  -- Robbie Chan  -- New to the Activity table
-      ,(200495500, 'CIPS')  -- Robert Smith -- This would be his 4th club!
+      ,(200495500, 'CIPS')  -- Robert Smith -- This would be his 4th club! This one bad row of data wound up having all the others be aborted
 
+---------------------------------------------------------------------
 -- 2. The Education Board is concerned with rising course costs! Create a trigger to ensure that a course cost does not get increased by more than 20% at any one time.
+-- We have a complex business rule that we are trying to enforce.
+-- How can we tell if a course's cost is being increassed by more than 20%? We have to do a comparison between the "before" cost and the "after" cost.
+-- The "before" cost is reflected in the deleted table; the "after" cost is reflected in the inserted table.
 IF EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[Course_Update_CourseCostLimit]'))
     DROP TRIGGER Course_Update_CourseCostLimit
 GO
 
 CREATE TRIGGER Course_Update_CourseCostLimit
-ON Course
-FOR Update -- Choose only the DML statement(s) that apply
+ON Course -- The inserted and deleted tables will have the same "schema" (columns) as the Course table
+FOR Update -- Only doing it on an UPDATE statement, because that's the onlyh time we have a before/after version of the data
 AS
     -- Body of Trigger
     IF @@ROWCOUNT > 0 AND
@@ -102,8 +141,8 @@ GO
 -- TODO: Write the code that will test this stored procedure.
 SELECT * FROM Course
 UPDATE Course SET CourseCost = 1000 -- This should fail
-UPDATE Course SET CourseCost = CourseCost * 1.21
-UPDATE Course SET CourseCost = CourseCost * 1.195
+UPDATE Course SET CourseCost = CourseCost * 1.21 -- An increase of 21%
+UPDATE Course SET CourseCost = CourseCost * 1.195 -- An increase of 19.5%
 
 -- 3. Too many students owe us money and keep registering for more courses! Create a trigger to ensure that a student cannot register for any more courses if they have a balance owing of more than $500.
 IF EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[Registration_Insert_BalanceOwing]'))
@@ -128,8 +167,11 @@ GO
 SELECT * FROM Student WHERE BalanceOwing > 0
 
 -- Write a stored procedure called RegisterStudent that puts a student in a course and increases the balance owing by the cost of the course.
+-- After creating this stored procedure, do some tests of the stored procedure. Remember to have the trigger in place (on the Registration table).
+-- TODO: Student Answer Here
 
 
+---------------------------------------------
 --4. Our school DBA has suddenly disabled some Foreign Key constraints to deal with performance issues! Create a trigger on the Registration table to ensure that only valid CourseIDs, StudentIDs and StaffIDs are used for grade records. (You can use sp_help tablename to find the name of the foreign key constraints you need to disable to test your trigger.) Have the trigger raise an error for each foreign key that is not valid. If you have trouble with this question create the trigger so it just checks for a valid student ID.
 -- sp_help Registration -- then disable the foreign key constraints....
 ALTER TABLE Registration NOCHECK CONSTRAINT FK_GRD_CRS_CseID
