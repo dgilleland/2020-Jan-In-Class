@@ -56,6 +56,7 @@
     <Compile Include="DAL\GradeBookContext.cs" />
     <Compile Include="DataModels\ActiveCourse.cs" />
     <Compile Include="DataModels\Applicant.cs" />
+    <Compile Include="DataModels\UpcomingCourse.cs" />
     <Compile Include="Entities\Student.cs" />
     <Compile Include="Entities\ClassMember.cs" />
     <Compile Include="Entities\Course.cs" />

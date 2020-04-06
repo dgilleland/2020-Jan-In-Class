@@ -10,6 +10,8 @@
         <div class="col-md-4">
             <h2>Courses &amp; Offerings</h2>
             <h3>Courses</h3>
+            <asp:HiddenField ID="GraduationYear" runat="server"
+                 Value="" />
             <asp:ListView ID="ActiveCourses" runat="server" ItemType="GradeBook.DataModels.ActiveCourse" DataSourceID="CourseListDataSource">
                 <AlternatingItemTemplate>
                     <tr style="">

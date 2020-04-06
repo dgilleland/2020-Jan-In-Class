@@ -11,6 +11,7 @@ namespace WebApp
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var year = int.Parse(GraduationYear.Value);
             ;
             //var sameObject = this.FindControl("ActiveCourses") as ListView;
             //ActiveCourses.DataSource = null;

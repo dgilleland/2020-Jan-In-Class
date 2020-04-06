@@ -8,7 +8,7 @@ namespace GradeBook.Entities
 {
     internal class Student
     {
-        public int StudentId { get; set; }
+        public int StudentId { get; set; } // PK/Identity column in my Db
         public string SchoolId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
