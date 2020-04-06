@@ -169,6 +169,7 @@ SELECT * FROM Student WHERE BalanceOwing > 0
 -- TODO: Student Answer Here
 
 --4. Our school DBA has suddenly disabled some Foreign Key constraints to deal with performance issues! Create a trigger on the Registration table to ensure that only valid CourseIDs, StudentIDs and StaffIDs are used for grade records. (You can use sp_help tablename to find the name of the foreign key constraints you need to disable to test your trigger.) Have the trigger raise an error for each foreign key that is not valid. If you have trouble with this question create the trigger so it just checks for a valid student ID.
+-- Notes: Foreign Keys give us our "referential integrity" in our database.
 -- sp_help Registration -- then disable the foreign key constraints....
 ALTER TABLE Registration NOCHECK CONSTRAINT FK_GRD_CRS_CseID
 ALTER TABLE Registration NOCHECK CONSTRAINT FK_GRD_STF_StaID
@@ -182,7 +183,7 @@ ON Registration
 FOR Insert,Update -- Choose only the DML statement(s) that apply
 AS
 	-- Body of Trigger
-    IF @@ROWCOUNT > 0
+    IF @@ROWCOUNT > 0 -- As a rule of thumb, you should always check for @@ROWCOUNT in a trigger
     BEGIN
         -- UPDATE(columnName) is a function call that checks to see if information between the 
         -- deleted and inserted tables for that column are different (i.e.: data in that column
@@ -210,6 +211,22 @@ AS
     END
 RETURN
 GO
+-- Test the trigger (on Registration table)
+SELECT * FROM Registration
+-- Let's modify this record: 199899200	DMIT254	2005M	0.00	Y	6
+-- Testing with good data
+UPDATE  Registration
+SET     Mark = 65,
+        WithdrawYN = 'N'
+WHERE   StudentID = 199899200
+  AND   CourseId = 'DMIT254'
+  AND   SEMESTER = '2005M'
+-- Testing with bad data
+UPDATE  Registration
+SET     StaffID = 99
+WHERE   StudentID = 199899200
+  AND   CourseId = 'DMIT254'
+  AND   SEMESTER = '2005M'
 
 -- 5. The school has placed a temporary hold on the creation of any more clubs. (Existing clubs can be renamed or removed, but no additional clubs can be created.) Put a trigger on the Clubs table to prevent any new clubs from being created.
 IF EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[dbo].[Club_Insert_Lockdown]'))
@@ -231,6 +248,7 @@ GO
 INSERT INTO Club(ClubId, ClubName) VALUES ('HACK', 'Honest Analyst Computer Knowledge')
 GO
 -- 6. Our network security officer suspects our system has a virus that is allowing students to alter their balance owing records! In order to track down what is happening we want to create a logging table that will log any changes to the balance owing in the Student table. You must create the logging table and the trigger to populate it when the balance owing is modified.
+-- For this problem, we only need the trigger to work on the UPDATE statement, as inserting does not change an old balance and deleting does not generate a new balance.
 -- Step 1) Make the logging table
 IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'BalanceOwingLog')
     DROP TABLE BalanceOwingLog
@@ -254,11 +272,12 @@ ON Student
 FOR Update -- Choose only the DML statement(s) that apply
 AS
 	-- Body of Trigger
-    IF @@ROWCOUNT > 0 AND UPDATE(BalanceOwing)
+    IF @@ROWCOUNT > 0 AND UPDATE(BalanceOwing) -- these are the only two conditions we're concerned about for logging
 	BEGIN
 	    INSERT INTO BalanceOwingLog (StudentID, ChangedateTime, OldBalance, NewBalance)
 	    SELECT I.StudentID, GETDATE(), D.BalanceOwing, I.BalanceOwing
         FROM deleted D INNER JOIN inserted I on D.StudentID = I.StudentID
+        WHERE  D.BalanceOwing <> I.BalanceOwing -- the reason for this line here is that our UPDATE statement might affect multiple rows, and not all of the rows will have a change in the BalanceOwing.
 	    IF @@ERROR <> 0 
 	    BEGIN
 		    RAISERROR('Insert into BalanceOwingLog Failed',16,1)
