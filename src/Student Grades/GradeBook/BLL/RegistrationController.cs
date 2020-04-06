@@ -73,12 +73,36 @@ namespace GradeBook.BLL
         #region Commands
         public void RegisterStudent(Applicant newStudent, List<UpcomingCourse> courses)
         {
+            // Precondition validations - I should not have NULL objects to work with
+            if (newStudent == null)
+                throw new ArgumentNullException(nameof(newStudent),
+                                                "Applicant information is required for registering new students");
+            if (courses == null || courses.Count == 0 || courses.All(x => x == null))
+                throw new ArgumentException("There are no courses to register the new student into",
+                                            nameof(courses));
+            else if (courses.Any(x => x == null))
+                throw new ArgumentNullException("Some of the course information is not supplied (null values)");
+
             using (var context = new GradebookContext())
             {
                 #region Validation
                 /* 0) Validation
                  * This is where we are interested in making sure that a) the data coming in is "good" (it will "fit" with our current state of the database) for the task we want to perform and b) we are enforcing any business rules that apply to our task.
                  */
+                var errors = new List<Exception>();
+                foreach(var course in courses)
+                {
+                    var foundSection =
+                        context
+                        .CourseSections
+                        .SingleOrDefault(x => x.Name == course.SectionName // section name
+                                           && x.CourseOffering.CourseId == course.CourseId // course id
+                                           && x.CourseOffering.Term == course.SchoolTerm); // school term
+                    if (foundSection == null)
+                        errors.Add(new Exception($"A section {course.SectionName} for the course {course.CourseId} in term {course.SchoolTerm} could not be found"));
+                }
+                if (errors.Any()) // If there are any errors
+                    ; // TODO: throw new BusinesssRuleException($"Unable to register {newStudent.FirstName} {newStudent.LastName} for some courses", errors);
                 #endregion
 
                 #region Processing
